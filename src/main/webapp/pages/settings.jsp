@@ -21,7 +21,7 @@
 
         <!-- BOOTSTRAP SCRIPTS -->
         <script src="/monkins/scripts/lib/bootstrap/bootstrap.min.js"></script>
-        <script src="scripts/lib/bootstrap/bootstrap.toggle.min.js"></script>        
+        <script src="scripts/lib/bootstrap/bootstrap.toggle.min.js"></script>
 
         <!-- ANGULAR SCRIPTS -->
         <script src="/monkins/scripts/lib/angular/angular.min.js"></script>
