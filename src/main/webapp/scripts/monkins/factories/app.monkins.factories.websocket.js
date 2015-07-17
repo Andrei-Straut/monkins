@@ -70,6 +70,14 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
             var promise = sendRequest(request);
             return promise;
         };
+        Service.updateSettings = function (settings) {
+            var request = {
+                type: "UpdateSettings",
+                data: settings
+            };
+            var promise = sendRequest(request);
+            return promise;
+        };
         function sendRequestWithCallbackId(request, givenCallbackId) {
             var defer = $q.defer();
             var callbackId = givenCallbackId;

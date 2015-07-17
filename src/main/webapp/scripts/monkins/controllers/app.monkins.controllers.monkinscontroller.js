@@ -11,11 +11,18 @@ monkins.controller('monkinscontroller', ['$scope', 'WebSocketFactory',
                     if (response.status === 200) {
                         $scope.jobs = response.data.jobs;
 
+                        if ($scope.jobs.length === 0) {
+                            $scope.notifyError("Oops! Looks like you haven't defined any URLs to monitor. "
+                                    + "Please head over to settings page", $('#modalError'));
+                        }
+
                         $scope.subscribe();
                     } else {
+                        $scope.notifyError(response.description, $('#modalError'));
                         console.log("Error: ", response);
                     }
                 }).catch(function (e) {
+                    $scope.notifyError(e.description, $('#modalError'));
                     console.log(e.description);
                 });
 
@@ -29,6 +36,7 @@ monkins.controller('monkinscontroller', ['$scope', 'WebSocketFactory',
                 subscribe.then(function (response) {
                     if (response.status === 200) {
                     } else {
+                        $scope.notifyError(response.description, $('#modalError'));
                         console.log(response);
                     }
                 }, function (error) {
@@ -44,36 +52,6 @@ monkins.controller('monkinscontroller', ['$scope', 'WebSocketFactory',
                     }
                 });
             }
-        };
-
-        $scope.unSubscribe = function () {
-            /*var interval = window.setInterval(function () {
-             
-             $scope.updates = WebSocketFactory.unSubscribe();
-             $scope.updates.then(function (response) {
-             console.log(response);
-             }, function (error) {
-             console.log(error.description);
-             }, function (update) {
-             console.log(update);
-             });
-             window.clearInterval(interval);
-             }, 1000);*/
-        };
-
-        $scope.unSubscribeAll = function () {
-            /*var interval = window.setInterval(function () {
-             
-             $scope.updates = WebSocketFactory.unSubscribeAll();
-             $scope.updates.then(function (response) {
-             console.log(response);
-             }, function (error) {
-             console.log(error.description);
-             }, function (update) {
-             console.log(update);
-             });
-             window.clearInterval(interval);
-             }, 1000);*/
         };
     }]);
 

@@ -9,11 +9,12 @@
 
         <!-- ANGULAR STYLES-->
         <link rel="stylesheet" href="/monkins/css/lib/angular/angular.draganddrop.css"/>
+        <link rel="stylesheet" href="/monkins/css/lib/angular/angular.ui-notification.css"/>
 
         <!-- BOOTSTRAP STYLES-->
         <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.toggle.css"/>
         <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.min.css"/>
-        
+
         <!-- FONTAWESOME STYLES-->
         <link rel="stylesheet" href="/monkins/css/lib/font-awesome/font-awesome.css"/>
 
@@ -31,6 +32,7 @@
         <script src="/monkins/scripts/lib/angular/angular.min.js"></script>
         <script src="/monkins/scripts/lib/angular/angular.ui.bootstrap.tpls.js"></script>
         <script src="/monkins/scripts/lib/angular/angular.draganddrop.js"></script>
+        <script src="/monkins/scripts/lib/angular/angular.ui.notification.min.js"></script>
 
         <!-- MONKINS SCRIPTS -->
         <script src="/monkins/scripts/monkins/app.monkins.js"></script>
@@ -299,7 +301,7 @@
                                     data-toggle="tooltip" 
                                     data-original-title=""
                                     ng-disabled="false" 
-                                    ng-click="return;">Save and return</button>
+                                    ng-click="saveAndReturnAction();">Save and return</button>
 
                                 &nbsp;
 
@@ -310,7 +312,7 @@
                                     data-toggle="tooltip" 
                                     data-original-title=""
                                     ng-disabled="false" 
-                                    ng-click="return;">Save and stay on page</button>
+                                    ng-click="saveAndStayAction();">Save and stay on page</button>
 
                                 &nbsp;
 
@@ -321,13 +323,33 @@
                                         data-toggle="modal"
                                         data-target="#graphSettingsAdvancedModal"
                                         ng-disabled="false" 
-                                        ng-click="return;">
+                                        ng-click="cancelAction();">
                                     Cancel</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="modalError" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="loadingError">Error</h4>
+                        </div>
+                        <div class="modal-body">
+                            An error has occurred:(<br/>
+                            {{errorText}}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
