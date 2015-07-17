@@ -234,7 +234,7 @@
 
                                                     <div class="row">
                                                         <div class="col-md-1 col-sm-1 col-xs-1">
-                                                            <div class="form-group input-group">
+                                                            <div class="form-group input-group input-group-sm">
                                                                 <span 
                                                                     id="jobDataOrder-{{item.order}}" 
                                                                     name="jobDataOrder-{{item.order}}" 
@@ -244,7 +244,7 @@
                                                         </div>
 
                                                         <div class="col-md-4 col-sm-4 col-xs-4">
-                                                            <div class="form-group input-group">
+                                                            <div class="form-group input-group input-group-sm">
                                                                 <span class="input-group-addon">Name</span>
                                                                 <input required
                                                                        id="jobDataName-{{item.name}}" 
@@ -259,7 +259,7 @@
                                                         </div>
 
                                                         <div class="col-md-6 col-sm-6 col-xs-6">
-                                                            <div class="form-group input-group">
+                                                            <div class="form-group input-group input-group-sm">
                                                                 <span class="input-group-addon">URL</span>
                                                                 <input required
                                                                        id="jobDataUrl-{{item.url}}" 
