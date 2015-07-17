@@ -5,20 +5,30 @@
 <html ng-app="monkins">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Monkins</title>
+        <title>Monkins</title>        
 
-        <script src="scripts/lib/angular/angular.min.js"></script>
-        <script src="scripts/lib/angular/angular.ui.bootstrap.tpls.js"></script>
-        <script src="scripts/lib/jquery/jquery-2.1.3.min.js"></script>
+        <!-- BOOTSTRAP STYLES-->
+        <link rel="stylesheet" href="css/lib/bootstrap/bootstrap.min.css">
+        
+        <!-- MONKINS STYLES-->
+        <link rel="stylesheet" href="css/monkins/monkins.css">
+        
+        <!-- JQUERY SCRIPTS -->
+        <script src="scripts/lib/jquery/jquery-2.1.3.min.js"></script>     
+        
+        <!-- BOOTSTRAP SCRIPTS -->
         <script src="scripts/lib/bootstrap/bootstrap.min.js"></script>
 
+        <!-- ANGULAR SCRIPTS -->
+        <script src="scripts/lib/angular/angular.min.js"></script>
+        <script src="scripts/lib/angular/angular.ui.bootstrap.tpls.js"></script>
+        <script src="/monkins/scripts/lib/angular/angular.draganddrop.js"></script>
+
+        <!-- MONKINS SCRIPTS -->
         <script src="scripts/monkins/app.monkins.js"></script>
         <script src="scripts/monkins/factories/app.monkins.factories.websocket.js"></script>
         <script src="scripts/monkins/directives/app.monkins.directives.job.js"></script>
         <script src="scripts/monkins/controllers/app.monkins.controllers.monkinscontroller.js"></script>
-
-        <link rel="stylesheet" href="css/lib/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="css/monkins/monkins.css">
     </head>
 
     <body ng-controller="monkinscontroller" ng-init="init();">
