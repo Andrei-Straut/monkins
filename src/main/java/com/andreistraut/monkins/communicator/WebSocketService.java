@@ -136,6 +136,10 @@ public class WebSocketService {
 
 		break;
 	    }
+	    case UPDATESETTINGS: {
+
+		break;
+	    }
 	    case UNKNOWN:
 	    default: {
 
@@ -148,7 +152,6 @@ public class WebSocketService {
 			.setIsEnded(true)
 			.setDescription("Message type unknown");
 		respond(session, response);
-
 	    }
 	}
     }
