@@ -37,5 +37,13 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory',
                 ($scope.models.list[i]).order = i + 1;
             }
         };
+        
+        $scope.removeJob = function(index) {
+            $scope.models.list.splice(index - 1, 1);
+            
+            for(var i = 0; i < $scope.models.list.length; i++) {
+                ($scope.models.list[i]).order = i + 1;
+            }
+        };
     }]);
 

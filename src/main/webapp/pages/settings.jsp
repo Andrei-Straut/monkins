@@ -8,14 +8,17 @@
         <title>Monkins Settings</title>
 
         <!-- ANGULAR STYLES-->
-        <link rel="stylesheet" href="/monkins/css/lib/angular/angular.draganddrop.css">
+        <link rel="stylesheet" href="/monkins/css/lib/angular/angular.draganddrop.css"/>
 
         <!-- BOOTSTRAP STYLES-->
-        <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.toggle.css">
-        <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.toggle.css"/>
+        <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.min.css"/>
+        
+        <!-- FONTAWESOME STYLES-->
+        <link rel="stylesheet" href="/monkins/css/lib/font-awesome/font-awesome.css"/>
 
         <!-- MONKINS STYLES-->
-        <link rel="stylesheet" href="/monkins/css/monkins/monkins.css">
+        <link rel="stylesheet" href="/monkins/css/monkins/monkins.css"/>
 
         <!-- JQUERY SCRIPTS -->
         <script src="/monkins/scripts/lib/jquery/jquery-2.1.3.min.js"></script>
@@ -230,24 +233,19 @@
                                                     ng-class="{'selected': models.selected === item}">
 
                                                     <div class="row">
-                                                        <div class="col-md-2 col-sm-2 col-xs-2">
-                                                            <div class="form-group">
-                                                                <label class="control-label" for="jobDataOrder-{{item.order}}">Order</label>
-                                                                <input required disabled
-                                                                       id="jobDataOrder-{{item.order}}" 
-                                                                       name="jobDataOrder-{{item.order}}" 
-                                                                       class="form-control"
-                                                                       data-toggle="tooltip" 
-                                                                       data-placement="bottom" 
-                                                                       data-original-title=""
-                                                                       type="string"
-                                                                       ng-model="item.order">
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            <div class="form-group input-group">
+                                                                <span 
+                                                                    id="jobDataOrder-{{item.order}}" 
+                                                                    name="jobDataOrder-{{item.order}}" 
+                                                                    ng-model="item.order"
+                                                                    class="input-group-addon">{{item.order}}</span>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-3 col-sm-3 col-xs-3">
-                                                            <div class="form-group">
-                                                                <label class="control-label" for="jobDataName-{{item.name}}">Name</label>
+                                                        <div class="col-md-4 col-sm-4 col-xs-4">
+                                                            <div class="form-group input-group">
+                                                                <span class="input-group-addon">Name</span>
                                                                 <input required
                                                                        id="jobDataName-{{item.name}}" 
                                                                        name="jobDataName-{{item.name}}" 
@@ -260,9 +258,9 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-5 col-sm-5 col-xs-5">
-                                                            <div class="form-group">
-                                                                <label class="control-label" for="jobDataUrl-{{item.url}}">URL</label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="form-group input-group">
+                                                                <span class="input-group-addon">URL</span>
                                                                 <input required
                                                                        id="jobDataUrl-{{item.url}}" 
                                                                        name="jobDataUrl-{{item.url}}" 
@@ -274,7 +272,13 @@
                                                                        ng-model="item.url">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+
+                                                        <div class="col-md-1 col-sm-1 col-xs-1">
+                                                            <button type="button" class="btn btn-danger btn-circle" ng-click="removeJob(item.order)">
+                                                                <i class="fa fa-remove">                                                                    
+                                                                </i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </li>
                                             </ul>
