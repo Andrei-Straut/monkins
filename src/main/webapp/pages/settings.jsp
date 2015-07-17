@@ -83,9 +83,9 @@
                                         </div>
 
                                         <div class="form-group"
-                                             ng-class="{
-                                             'has-error'
-                                             : false}">
+                                             ng-class="{'has-error' : 
+                                             monkinssettings.pollingIntervalMs.$error.required
+                                                                 || !monkinssettings.pollingIntervalMs.$valid}">
                                             <label class="control-label" for="pollingIntervalMs">Polling Interval (ms)</label>
                                             <!-- max -> 60m * 60s * 1000ms = 1h -->
                                             <input required
@@ -99,14 +99,24 @@
                                                    min="100"
                                                    max="3600000" 
                                                    ng-model="tempSettings.pollingIntervalMs">
+                                            <label class="control-label" 
+                                                   for="pollingIntervalMs" 
+                                                   ng-show="monkinssettings.pollingIntervalMs.$error.required">
+                                                Polling interval must always be specified
+                                            </label>
+                                            <label class="control-label" 
+                                                   for="pollingIntervalMs" 
+                                                   ng-show="!monkinssettings.pollingIntervalMs.$valid">
+                                                Polling interval must be a number between 100 and 3.600.000 (1h)
+                                            </label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-3 border-right">
                                         <div class="form-group"
-                                             ng-class="{
-                                             'has-error'
-                                             : false}">
+                                             ng-class="{'has-error' : 
+                                             monkinssettings.failCountBeforeCancel.$error.required
+                                                                 || !monkinssettings.failCountBeforeCancel.$valid}">
                                             <label class="control-label" for="failCountBeforeCancel">Fail Count Before Cancel</label>
                                             <input required
                                                    id="failCountBeforeCancel" 
@@ -118,12 +128,22 @@
                                                    type="number"
                                                    min="0"
                                                    ng-model="tempSettings.failCountBeforeCancel">
+                                            <label class="control-label" 
+                                                   for="failCountBeforeCancel" 
+                                                   ng-show="monkinssettings.failCountBeforeCancel.$error.required">
+                                                Fail limit must always be specified
+                                            </label>
+                                            <label class="control-label" 
+                                                   for="failCountBeforeCancel" 
+                                                   ng-show="!monkinssettings.failCountBeforeCancel.$valid">
+                                                Fail limit must be a number larger than or equal to 0 (no canceling)
+                                            </label>
                                         </div>
 
                                         <div class="form-group"
-                                             ng-class="{
-                                             'has-error'
-                                             : false}">
+                                             ng-class="{'has-error' : 
+                                             monkinssettings.numberOfColumns.$error.required
+                                                                 || !monkinssettings.numberOfColumns.$valid}">
                                             <label class="control-label" for="numberOfColumns">Number of Columns</label>
                                             <input required
                                                    id="numberOfColumns" 
@@ -136,13 +156,23 @@
                                                    min="1"
                                                    max="6"
                                                    ng-model="tempSettings.numberOfColumns">
+                                            <label class="control-label" 
+                                                   for="numberOfColumns" 
+                                                   ng-show="monkinssettings.numberOfColumns.$error.required">
+                                                Number of columns must always be specified
+                                            </label>
+                                            <label class="control-label" 
+                                                   for="failCountBeforeCancel" 
+                                                   ng-show="!monkinssettings.numberOfColumns.$valid">
+                                                Number of columns must be a number between 1 and 6
+                                            </label>
                                         </div>
 
                                         <div class="form-group"
-                                             ng-class="{
-                                             'has-error'
-                                             : false}">
-                                            <label class="control-label" for="defaultJobDisplayHeight">Default Job Height</label>
+                                             ng-class="{'has-error' : 
+                                             monkinssettings.defaultJobDisplayHeight.$error.required
+                                                                 || !monkinssettings.defaultJobDisplayHeight.$valid}">
+                                            <label class="control-label" for="defaultJobDisplayHeight">Default Job Height (px)</label>
                                             <input required
                                                    id="defaultJobDisplayHeight" 
                                                    name="defaultJobDisplayHeight" 
@@ -154,6 +184,16 @@
                                                    min="50"
                                                    max="1024"
                                                    ng-model="tempSettings.defaultJobDisplayHeight">
+                                            <label class="control-label" 
+                                                   for="defaultJobDisplayHeight" 
+                                                   ng-show="monkinssettings.defaultJobDisplayHeight.$error.required">
+                                                Default Height must always be specified
+                                            </label>
+                                            <label class="control-label" 
+                                                   for="defaultJobDisplayHeight" 
+                                                   ng-show="!monkinssettings.defaultJobDisplayHeight.$valid">
+                                                Default Height must be a number between 50 and 1024 (px)
+                                            </label>
                                         </div>
                                     </div>
 
@@ -264,8 +304,8 @@
                                                             <div class="form-group input-group input-group-sm">
                                                                 <span class="input-group-addon">URL</span>
                                                                 <input required
-                                                                       id="jobDataUrl-{{item.url}}" 
-                                                                       name="jobDataUrl-{{item.url}}" 
+                                                                       id="jobDataUrl-{{item.order}}"
+                                                                       name="jobDataUrl-{{item.order}}"
                                                                        class="form-control"
                                                                        data-toggle="tooltip" 
                                                                        data-placement="bottom" 
@@ -300,8 +340,8 @@
                                     type="submit" 
                                     data-toggle="tooltip" 
                                     data-original-title=""
-                                    ng-disabled="false" 
-                                    ng-click="saveAndReturnAction();">Save and return</button>
+                                    ng-disabled="!$scope.models || $scope.models.list.length === 0" 
+                                    ng-click="saveAndReturnAction();">Save and go to main page</button>
 
                                 &nbsp;
 
@@ -311,8 +351,8 @@
                                     type="submit" 
                                     data-toggle="tooltip" 
                                     data-original-title=""
-                                    ng-disabled="false" 
-                                    ng-click="saveAndStayAction();">Save and stay on page</button>
+                                    ng-disabled="!$scope.models || $scope.models.list.length === 0" 
+                                    ng-click="saveAndStayAction();">Save and stay on this page</button>
 
                                 &nbsp;
 
@@ -325,6 +365,18 @@
                                         ng-disabled="false" 
                                         ng-click="cancelAction();">
                                     Cancel</button>
+
+                                &nbsp;
+
+                                <button id="cancelButton" 
+                                        name="cancelButton"
+                                        type="button"
+                                        class="btn btn-warning"
+                                        data-toggle="modal"
+                                        data-target="#graphSettingsAdvancedModal"
+                                        ng-disabled="false" 
+                                        ng-click="reloadAction();">
+                                    Reload Settings</button>
                             </div>
                         </div>
                     </form>
