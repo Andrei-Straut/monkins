@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="css/monkins/monkins.css">
 
         <!-- JQUERY SCRIPTS -->
-        <script src="scripts/lib/jquery/jquery-2.1.3.min.js"></script>     
+        <script src="scripts/lib/jquery/jquery-2.1.3.min.js"></script>
 
         <!-- BOOTSTRAP SCRIPTS -->
         <script src="scripts/lib/bootstrap/bootstrap.min.js"></script>
