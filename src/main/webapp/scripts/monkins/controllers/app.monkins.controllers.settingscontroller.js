@@ -4,6 +4,10 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory',
     function ($scope, WebSocketFactory) {
         $scope.settings = {};
         $scope.tempSettings = {};
+        $scope.models = {
+            selected: null,
+            list: []
+        };
 
         $scope.init = function () {
             var interval = window.setInterval(function () {
@@ -11,8 +15,8 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory',
                 settingsRequest.then(function (response) {
                     if (response.status === 200) {
                         $scope.settings = response.data;
-                        
                         angular.copy($scope.settings, $scope.tempSettings);
+                        angular.copy($scope.settings.urls, $scope.models.list);
                         
                         console.log($scope.settings);
                     } else {

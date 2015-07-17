@@ -8,6 +8,7 @@
         <title>Monkins Settings</title>
 
         <!-- ANGULAR STYLES-->
+        <link rel="stylesheet" href="/monkins/css/lib/angular/angular.draganddrop.css">
 
         <!-- BOOTSTRAP STYLES-->
         <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.toggle.css">
@@ -26,6 +27,7 @@
         <!-- ANGULAR SCRIPTS -->
         <script src="/monkins/scripts/lib/angular/angular.min.js"></script>
         <script src="/monkins/scripts/lib/angular/angular.ui.bootstrap.tpls.js"></script>
+        <script src="/monkins/scripts/lib/angular/angular.draganddrop.js"></script>
 
         <!-- MONKINS SCRIPTS -->
         <script src="/monkins/scripts/monkins/app.monkins.js"></script>
@@ -49,10 +51,7 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-6 border-right">
-                                        <div class="form-group"
-                                             ng-class="{
-                                             'has-error'
-                                             : false}">
+                                        <div class="form-group">
                                             <label class="control-label" for="jsonApiSuffix">Jenkins JSON API Suffix</label>
                                             <input required
                                                    id="jsonApiSuffix" 
@@ -65,10 +64,7 @@
                                                    ng-model="tempSettings.jsonApiSuffix">
                                         </div>
 
-                                        <div class="form-group"
-                                             ng-class="{
-                                             'has-error'
-                                             : false}">
+                                        <div class="form-group">
                                             <label class="control-label" for="jsonApiTestReportSuffix">Jenkins JSON API Test Report Suffix</label>
                                             <input required
                                                    id="jsonApiTestReportSuffix" 
@@ -193,7 +189,7 @@
                                                        ng-disabled="false">
                                             </label>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label class="control-label" for="displayDetailsForFailedJobs"
                                                    data-toggle="tooltip" 
@@ -219,47 +215,71 @@
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Job
+                                Jobs (Drag and Drop to Reorder)
                             </div>
                             <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div ng-repeat="jobData in settings.urls | orderBy: 'order'">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group input-group-sm"
-                                                         ng-class="{'has-error' : false}">
-                                                        <label class="control-label" for="jobDisplayName-{{jobData.name}}">Display Name</label>
-                                                        <input required
-                                                               id="jobDisplayName-{{jobData.name}}" 
-                                                               name="jobDisplayName-{{jobData.name}}" 
-                                                               class="form-control"
-                                                               data-toggle="tooltip" 
-                                                               data-placement="bottom" 
-                                                               data-original-title=""
-                                                               type="string"
-                                                               ng-model="jobData.name">
-                                                    </div>
-                                                </div>
+                                <div class="simpleDemo row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="panel panel-info">
+                                            <ul dnd-list="models.list">
+                                                <li ng-repeat="item in models.list"
+                                                    dnd-draggable="item"
+                                                    dnd-moved="models.list.splice($index, 1)"
+                                                    dnd-effect-allowed="move"
+                                                    dnd-selected="models.selected = item"
+                                                    ng-class="{'selected': models.selected === item}">
 
-                                                <div class="col-md-6">
-                                                    <div class="form-group input-group-sm"
-                                                         ng-class="{'has-error' : false}">
-                                                        <label class="control-label" for="jobUrl-{{jobData.url}}">URL</label>
-                                                        <input required
-                                                               id="jobUrl-{{jobData.url}}" 
-                                                               name="jobUrl-{{jobData.url}}" 
-                                                               class="form-control"
-                                                               data-toggle="tooltip" 
-                                                               data-placement="bottom" 
-                                                               data-original-title=""
-                                                               type="string"
-                                                               ng-model="jobData.url">
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-2 col-xs-2">
+                                                            <div class="form-group">
+                                                                <label class="control-label" for="jobDataOrder-{{item.order}}">Order</label>
+                                                                <input required disabled
+                                                                       id="jobDataOrder-{{item.order}}" 
+                                                                       name="jobDataOrder-{{item.order}}" 
+                                                                       class="form-control"
+                                                                       data-toggle="tooltip" 
+                                                                       data-placement="bottom" 
+                                                                       data-original-title=""
+                                                                       type="string"
+                                                                       ng-model="item.order">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3 col-sm-3 col-xs-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label" for="jobDataName-{{item.name}}">Name</label>
+                                                                <input required
+                                                                       id="jobDataName-{{item.name}}" 
+                                                                       name="jobDataName-{{item.name}}" 
+                                                                       class="form-control"
+                                                                       data-toggle="tooltip" 
+                                                                       data-placement="bottom" 
+                                                                       data-original-title=""
+                                                                       type="string"
+                                                                       ng-model="item.name">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-5 col-sm-5 col-xs-5">
+                                                            <div class="form-group">
+                                                                <label class="control-label" for="jobDataUrl-{{item.url}}">URL</label>
+                                                                <input required
+                                                                       id="jobDataUrl-{{item.url}}" 
+                                                                       name="jobDataUrl-{{item.url}}" 
+                                                                       class="form-control"
+                                                                       data-toggle="tooltip" 
+                                                                       data-placement="bottom" 
+                                                                       data-original-title=""
+                                                                       type="string"
+                                                                       ng-model="item.url">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 col-sm-2 col-xs-2"></div>
                                                     </div>
-                                                </div>
-                                            </div>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </div>           
+                                    </div>
                                 </div>
                             </div>
                         </div>
