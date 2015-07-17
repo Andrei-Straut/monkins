@@ -1,0 +1,66 @@
+.ui-notification{
+    background: #428bca;
+    box-shadow: 5px 5px 10px rgba(0,0,0,.3);
+    color: #fff;
+    cursor: pointer;
+    position: fixed;
+    right: 10px;
+    top: -100px;
+    transition: all ease .5s;
+    o-transition: all ease .5s;
+    webkit-transition: all ease .5s;
+    width: 300px;
+    z-index: 9999;
+}
+.ui-notification.killed{
+    opacity: 0;
+    transition: opacity ease 1s;
+    o-transition: opacity ease 1s;
+    webkit-transition: opacity ease 1s;
+}
+.ui-notification > h3
+{
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 10px 10px 0;
+    padding: 0 0 5px;
+    text-align: left;
+}
+.ui-notification a
+{
+    color: #fff;
+}
+.ui-notification a:hover
+{
+    text-decoration: underline;
+}
+.ui-notification > .message
+{
+    margin: 10px;
+}
+.ui-notification.warning
+{
+    background: #f0ad4e;
+    color: #fff;
+}
+.ui-notification.error
+{
+    background: #d9534f;
+    color: #fff;
+}
+.ui-notification.success
+{
+    background: #5cb85c;
+    color: #fff;
+}
+.ui-notification.info
+{
+    background: #5bc0de;
+    color: #fff;
+}
+.ui-notification:hover
+{
+    opacity: .7;
+}
