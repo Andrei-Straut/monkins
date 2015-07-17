@@ -137,7 +137,8 @@ public class WebSocketService {
 		break;
 	    }
 	    case UPDATESETTINGS: {
-
+		respond(session, new MessageResponse(request.getCallbackId(), 200, true, "No-Op", null));
+		
 		break;
 	    }
 	    case UNKNOWN:
