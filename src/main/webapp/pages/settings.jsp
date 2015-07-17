@@ -224,7 +224,7 @@
                                             <ul dnd-list="models.list">
                                                 <li ng-repeat="item in models.list"
                                                     dnd-draggable="item"
-                                                    dnd-moved="models.list.splice($index, 1)"
+                                                    dnd-moved="moveCallback($index)"
                                                     dnd-effect-allowed="move"
                                                     dnd-selected="models.selected = item"
                                                     ng-class="{'selected': models.selected === item}">

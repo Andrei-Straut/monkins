@@ -17,7 +17,7 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory',
                         $scope.settings = response.data;
                         angular.copy($scope.settings, $scope.tempSettings);
                         angular.copy($scope.settings.urls, $scope.models.list);
-                        
+
                         console.log($scope.settings);
                     } else {
                         console.log("Error: ", response);
@@ -28,6 +28,14 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory',
 
                 window.clearInterval(interval);
             }, 1000);
+        };
+
+        $scope.moveCallback = function (index) {
+            $scope.models.list.splice(index, 1);
+            
+            for(var i = 0; i < $scope.models.list.length; i++) {
+                ($scope.models.list[i]).order = i + 1;
+            }
         };
     }]);
 
