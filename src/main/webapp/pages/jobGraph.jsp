@@ -29,7 +29,8 @@
 
         <!-- ANGULAR SCRIPTS -->
         <script src="/monkins/scripts/lib/angular/angular.min.js"></script>
-        <script src="/monkins/scripts/lib/angular/angular.ui.bootstrap.tpls.js"></script>
+        <script src="/monkins/scripts/lib/angular/angular.ui.bootstrap.tpls.min.js"></script>
+        <script src="/monkins/scripts/lib/angular/angular.draganddrop.js"></script>
         <script src="/monkins/scripts/lib/angular/angular.ui.notification.min.js"></script>
 
         <!-- MONKINS SCRIPTS -->
@@ -51,6 +52,7 @@
             </div>
         </div>
 
+        <!--
         <div class="row">
             <div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="modalError" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
@@ -70,6 +72,7 @@
                 </div>
             </div>
         </div>
+        -->
         
     </body>
 </html>

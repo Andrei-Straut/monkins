@@ -30,7 +30,7 @@
 
         <!-- ANGULAR SCRIPTS -->
         <script src="/monkins/scripts/lib/angular/angular.min.js"></script>
-        <script src="/monkins/scripts/lib/angular/angular.ui.bootstrap.tpls.js"></script>
+        <script src="/monkins/scripts/lib/angular/angular.ui.bootstrap.tpls.min.js"></script>
         <script src="/monkins/scripts/lib/angular/angular.draganddrop.js"></script>
         <script src="/monkins/scripts/lib/angular/angular.ui.notification.min.js"></script>
 
