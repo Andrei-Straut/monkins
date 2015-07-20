@@ -130,10 +130,9 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                     if (messageObj && messageObj.description && messageObj.description === 'UPDATE_SETTINGS' && messageObj.data) {
                         console.log("Received settings message: ", messageObj);
                         $rootScope.$emit('UPDATE_SETTINGS', messageObj.data);
-                    } else {
-                        console.log("Received response: ", messageObj);
                     }
                     
+                    console.log("Received response: ", messageObj);
                     console.log("Request with id " + messageObj.callback_id + " completed");
                     delete callbacks[messageObj.callbackID];
                 } else {
@@ -141,20 +140,12 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                 }
                 //If not, we have a standalone message, log it
             } else {
-                if (messageObj && messageObj.description) {
-                    if (messageObj.description === 'UPDATE' || messageObj.description === 'ERROR') {
-                        console.log("Received job message: ", messageObj);
-                    } else if (messageObj.description === 'UPDATE_SETTINGS') {
-                        console.log("Received settings message: ", messageObj);
-                        if (messageObj.data) {
-                            $rootScope.$emit('UPDATE_SETTINGS', messageObj.data);
-                        }
-                    } else {
-                        console.log("Received message: ", messageObj);
+                if (messageObj && messageObj.description === 'UPDATE_SETTINGS') {
+                    if (messageObj.data) {
+                        $rootScope.$emit('UPDATE_SETTINGS', messageObj.data);
                     }
-                } else {
-                    console.log("Received: ", messageObj);
                 }
+                console.log("Received: ", messageObj);
             }
         }
 

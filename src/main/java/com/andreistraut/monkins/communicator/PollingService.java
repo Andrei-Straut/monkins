@@ -10,34 +10,36 @@ import java.util.logging.Logger;
 
 public class PollingService {
 
-    private ConfigurationManager config;
     Timer timer;
     TimerTask task;
 
     public PollingService() throws IOException {
-	this.config = ConfigurationManager.getInstance();
     }
 
     public void updateConfig(ConfigurationManager config) throws Exception {
 	this.stop();
-	this.config = config;
 	this.start();
     }
 
     public void start() throws Exception {
-	
-	if(this.task != null && this.timer != null) {
+
+	if (this.task != null && this.timer != null) {
+	    for (PollingJob job : ConfigurationManager.getInstance().getPollingJobs()) {
+		MessageResponse response = new MessageResponse(0, 200, false, "UPDATE", job.toJson());
+		WebSocketService.respondAll(response);
+	    }
+
 	    return;
 	}
 
-	if (config.getPollingJobs() == null || config.getPollingJobs().isEmpty()) {
+	if (ConfigurationManager.getInstance().getPollingJobs() == null || ConfigurationManager.getInstance().getPollingJobs().isEmpty()) {
 	    throw new Exception("No polling jobs found");
 	}
 
 	Logger.getLogger(ConfigurationManager.class.getName()).log(Level.INFO,
 		"Starting polling service");
 
-	for (PollingJob job : config.getPollingJobs()) {
+	for (PollingJob job : ConfigurationManager.getInstance().getPollingJobs()) {
 	    job.setIsCancelled(false);
 	    job.setCanPoll(true);
 	}
@@ -45,30 +47,34 @@ public class PollingService {
 	this.task = new TimerTask() {
 	    @Override
 	    public void run() {
-		for (PollingJob job : config.getPollingJobs()) {
-		    try {
-			job.update();
-		    } catch (IOException ex) {
-			Logger.getLogger(PollingService.class.getName()).log(Level.SEVERE, null, ex);
+		try {
+		    for (PollingJob job : ConfigurationManager.getInstance().getPollingJobs()) {
+			try {
+			    job.update();
+			} catch (IOException ex) {
+			    Logger.getLogger(PollingService.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		    }
+		} catch (IOException ex) {
+		    Logger.getLogger(PollingService.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	    }
 	};
-	
+
 	this.timer = new Timer();
 	this.timer.scheduleAtFixedRate(task, 1000, 10 * 1000);
     }
 
-    public void stop() {
+    public void stop() throws IOException {
 	Logger.getLogger(ConfigurationManager.class.getName()).log(Level.INFO,
 		"Stopping polling service");
 
-	for (PollingJob job : config.getPollingJobs()) {
+	for (PollingJob job : ConfigurationManager.getInstance().getPollingJobs()) {
 	    job.setIsCancelled(true);
 	    job.setCanPoll(false);
 	}
-	
-	if(this.task != null) {
+
+	if (this.task != null) {
 	    this.task.cancel();
 	    this.task = null;
 	}

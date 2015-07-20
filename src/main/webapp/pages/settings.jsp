@@ -38,6 +38,7 @@
         <script src="/monkins/scripts/monkins/app.monkins.js"></script>
         <script src="/monkins/scripts/monkins/factories/app.monkins.factories.websocket.js"></script>
         <script src="/monkins/scripts/monkins/controllers/app.monkins.controllers.settingscontroller.js"></script>
+        <script src="/monkins/scripts/monkins/directives/app.monkins.directives.validation.jobUrl.js"></script>
     </head>
 
     <body ng-controller="settingscontroller" ng-init="init();">
@@ -260,7 +261,18 @@
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Jobs (Drag and Drop to Reorder)
+                                Jobs (Drag and Drop to Reorder) 
+                                &nbsp;
+                                <button id="addJobButton" 
+                                        name="addJobButton"
+                                        type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal"
+                                        data-target="#addJobModal"
+                                        ng-disabled="false" 
+                                        ng-click="return;">
+                                    Add Job</button>
+
                             </div>
                             <div class="panel-body">
                                 <div class="simpleDemo row">
@@ -399,6 +411,59 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="modal fade" id="addJobModal" tabindex="-1" role="dialog" aria-labelledby="addJobModal" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="addJobModal">Add Job</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form name="addjobform" novalidate>
+                                <div class="form-group">
+                                    <label class="control-label" for="addJobName">Name</label>
+                                    <input required
+                                           id="addJobName" 
+                                           name="addJobName" 
+                                           class="form-control"
+                                           data-toggle="tooltip" 
+                                           data-placement="bottom" 
+                                           data-original-title=""
+                                           type="string"
+                                           ng-model="newJob.name">
+                                </div>
+
+                                <div class="form-group"
+                                     ng-class="{'has-error' : 
+                                            addjobform.addJobUrl.$dirty && addjobform.addJobUrl.$error.joburlvalid}">
+                                    <label class="control-label" for="addJobUrl">URL</label>
+                                    <input required job-url-valid
+                                           id="addJobUrl"
+                                           name="addJobUrl"
+                                           class="form-control"
+                                           data-toggle="tooltip" 
+                                           data-placement="bottom" 
+                                           data-original-title=""
+                                           type="string"
+                                           ng-model="newJob.url">
+                                    <label class="control-label" 
+                                           for="addJobUrl" 
+                                           ng-show="addjobform.addJobUrl.$dirty && addjobform.addJobUrl.$error.joburlvalid">
+                                        URL format is invalid
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="!addJobFieldsOk();" ng-click="addJob();">Add</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>

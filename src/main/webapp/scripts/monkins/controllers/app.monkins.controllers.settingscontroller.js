@@ -9,6 +9,7 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
             list: []
         };
         $scope.errorText = '';
+        $scope.newJob = {};
 
         $scope.init = function () {
             var interval = window.setInterval(function () {
@@ -92,6 +93,30 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
             }
         };
 
+        $scope.addJob = function () {
+            if ($scope.newJob && $scope.newJob.name && $scope.newJob.url) {                
+                $scope.models.list.push({
+                    "name": $scope.newJob.name,
+                    "url": $scope.newJob.url,
+                    "order": $scope.models.list.length + 1
+                });
+                
+                $scope.newJob = {};
+            }
+            
+            $('#addJobModal').modal('hide');
+        };
+
+        $scope.addJobFieldsOk = function () {
+            return $scope.newJob
+                    && $scope.newJob.name !== undefined
+                    && $scope.newJob.name !== null
+                    && $scope.newJob.name !== ''
+                    && $scope.newJob.url !== undefined
+                    && $scope.newJob.url !== null
+                    && $scope.newJob.url !== '';
+        };
+
         $scope.removeJob = function (index) {
             $scope.models.list.splice(index - 1, 1);
 
@@ -168,7 +193,7 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
         $scope.compileSettings = function () {
             var newSettings = {};
             angular.copy($scope.tempSettings, newSettings);
-            newSettings.urls = $scope.models.list;
+            angular.copy($scope.models.list, newSettings.urls);
 
             return newSettings;
         };

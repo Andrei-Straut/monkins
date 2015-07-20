@@ -109,7 +109,7 @@ public class PollingJob {
 
     public void update() throws IOException {
 
-	Logger.getLogger(PollingJob.class.getName()).log(Level.INFO,
+	Logger.getLogger(PollingJob.class.getName()).log(Level.FINER,
 		"Updating info for job {0}",
 		new Object[]{this.name});
 
@@ -194,7 +194,7 @@ public class PollingJob {
 
 	}
 
-	Logger.getLogger(PollingJob.class.getName()).log(Level.INFO,
+	Logger.getLogger(PollingJob.class.getName()).log(Level.FINER,
 		"Job {0} update done",
 		new Object[]{this.name});
     }

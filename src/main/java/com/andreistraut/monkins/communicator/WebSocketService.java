@@ -143,8 +143,8 @@ public class WebSocketService {
 	    case UPDATESETTINGS: {
 		try {
 		    ConfigurationManager.getInstance().updateSettings(request.getData());
-		    
-		    if(pollingService != null) {
+
+		    if (pollingService != null) {
 			pollingService.updateConfig(ConfigurationManager.getInstance());
 		    }
 
@@ -178,7 +178,7 @@ public class WebSocketService {
     }
 
     @OnClose
-    public void onClose(Session session) {
+    public void onClose(Session session) throws IOException {
 
 	Logger.getLogger(WebSocketService.class
 		.getName()).log(
@@ -201,6 +201,10 @@ public class WebSocketService {
     }
 
     public static void respondAll(MessageResponse response) {
+	if (sessions == null || sessions.isEmpty()) {
+	    return;
+	}
+
 	Logger.getLogger(WebSocketService.class
 		.getName()).log(Level.FINER,
 			"Number of subscribers: {0}",
@@ -223,7 +227,7 @@ public class WebSocketService {
 	}
     }
 
-    private void unsubscribeClient(Session session) {
+    private void unsubscribeClient(Session session) throws IOException {
 	if (sessions != null && !sessions.isEmpty()) {
 	    if (sessions.contains(session)) {
 		sessions.remove(session);
