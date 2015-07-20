@@ -14,6 +14,9 @@
         <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.toggle.css"/>
         <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.min.css"/>
 
+        <!-- VIS STYLES-->
+        <link rel="stylesheet" href="/monkins/css/lib/vis/vis.min.css"/>
+        
         <!-- FONTAWESOME STYLES-->
         <link rel="stylesheet" href="/monkins/css/lib/font-awesome/font-awesome.css"/>
 
@@ -32,13 +35,17 @@
         <script src="/monkins/scripts/lib/angular/angular.ui.bootstrap.tpls.min.js"></script>
         <script src="/monkins/scripts/lib/angular/angular.draganddrop.js"></script>
         <script src="/monkins/scripts/lib/angular/angular.ui.notification.min.js"></script>
+        
+        <!-- VIS SCRIPTS -->
+        <script src="/monkins/scripts/lib/vis/vis.min.js"></script>        
 
         <!-- MONKINS SCRIPTS -->
         <script src="/monkins/scripts/monkins/app.monkins.js"></script>
+        <script src="/monkins/scripts/monkins/controllers/app.monkins.controllers.analyzercontroller.js"></script>
         <script src="/monkins/scripts/monkins/factories/app.monkins.factories.websocket.js"></script>
     </head>
 
-    <body>
+    <body ng-controller="analyzercontroller" ng-init="init();">
         <div class="col-md-12 col-sm-12 col-xs-12">
 
             <div class="panel panel-default">
