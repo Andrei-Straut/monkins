@@ -1,11 +1,23 @@
 
 
-monkins.controller('monkinscontroller', ['$scope', 'WebSocketFactory',
-    function ($scope, WebSocketFactory) {
+monkins.controller('monkinscontroller', ['$rootScope', '$scope', 'WebSocketFactory',
+    function ($rootScope, $scope, WebSocketFactory) {
         $scope.jobs = [];
+        $scope.settings = {};
 
         $scope.init = function () {
             var interval = window.setInterval(function () {
+                var settings = WebSocketFactory.getSettings();
+                settings.then(function (response) {
+                    if (response.status === 200) {
+                        $scope.settings = response.data;
+                    } else {
+                        console.log("Error: ", response);
+                    }
+                }).catch(function (e) {
+                    console.log(e.description);
+                });
+                
                 var pollingJobs = WebSocketFactory.getJobsList();
                 pollingJobs.then(function (response) {
                     if (response.status === 200) {
@@ -53,5 +65,11 @@ monkins.controller('monkinscontroller', ['$scope', 'WebSocketFactory',
                 });
             }
         };
+
+        $rootScope.$on('UPDATE_SETTINGS', function (event, data) {
+            console.log("Updating settings");
+            $scope.init();
+            console.log("Updated settings");
+        });
     }]);
 

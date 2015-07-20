@@ -1,7 +1,7 @@
 /**
  * Websocket factory
  */
-monkins.factory('WebSocketFactory', ['$q', '$rootScope', 
+monkins.factory('WebSocketFactory', ['$q', '$rootScope',
     function ($q, $rootScope) {
 
         // We return this object to anything injecting our service
@@ -70,6 +70,14 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
             var promise = sendRequest(request);
             return promise;
         };
+        Service.reloadSettings = function () {
+            var request = {
+                type: "ReloadSettings",
+                data: {}
+            };
+            var promise = sendRequest(request);
+            return promise;
+        };
         Service.updateSettings = function (settings) {
             var request = {
                 type: "UpdateSettings",
@@ -93,7 +101,7 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                     response.callback_id = callbackId;
                     response.status = 410;
                     response.isEnded = true;
-                    response.description = 'Connection was closed in the meantime ' 
+                    response.description = 'Connection was closed in the meantime '
                             + '( or hasn\'t been successfully opened), please try and refresh the page';
                     listener(response);
 
@@ -105,10 +113,12 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
             }
 
             return defer.promise;
-        };
+        }
+        ;
         function sendRequest(request) {
             return sendRequestWithCallbackId(request, getCallbackId());
-        };
+        }
+        ;
         function listener(data) {
             var messageObj = data;
             // If an object exists with callback_id in our callbacks object, resolve it
@@ -116,7 +126,14 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                 $rootScope.$apply(callbacks[messageObj.callback_id].cb.notify(messageObj));
                 if (messageObj.callback_id && messageObj.isEnded && messageObj.isEnded === true) {
                     $rootScope.$apply(callbacks[messageObj.callback_id].cb.resolve(messageObj));
-                    console.log("Received response: ", messageObj);
+
+                    if (messageObj && messageObj.description && messageObj.description === 'UPDATE_SETTINGS' && messageObj.data) {
+                        console.log("Received settings message: ", messageObj);
+                        $rootScope.$emit('UPDATE_SETTINGS', messageObj.data);
+                    } else {
+                        console.log("Received response: ", messageObj);
+                    }
+                    
                     console.log("Request with id " + messageObj.callback_id + " completed");
                     delete callbacks[messageObj.callbackID];
                 } else {
@@ -124,7 +141,20 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                 }
                 //If not, we have a standalone message, log it
             } else {
-                console.log("Received message: ", messageObj);
+                if (messageObj && messageObj.description) {
+                    if (messageObj.description === 'UPDATE' || messageObj.description === 'ERROR') {
+                        console.log("Received job message: ", messageObj);
+                    } else if (messageObj.description === 'UPDATE_SETTINGS') {
+                        console.log("Received settings message: ", messageObj);
+                        if (messageObj.data) {
+                            $rootScope.$emit('UPDATE_SETTINGS', messageObj.data);
+                        }
+                    } else {
+                        console.log("Received message: ", messageObj);
+                    }
+                } else {
+                    console.log("Received: ", messageObj);
+                }
             }
         }
 

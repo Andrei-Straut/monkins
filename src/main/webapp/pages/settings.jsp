@@ -340,7 +340,7 @@
                                     type="submit" 
                                     data-toggle="tooltip" 
                                     data-original-title=""
-                                    ng-disabled="!$scope.models || $scope.models.list.length === 0" 
+                                    ng-disabled="!models || models.list.length === 0" 
                                     ng-click="saveAndReturnAction();">Save and go to main page</button>
 
                                 &nbsp;
@@ -351,7 +351,7 @@
                                     type="submit" 
                                     data-toggle="tooltip" 
                                     data-original-title=""
-                                    ng-disabled="!$scope.models || $scope.models.list.length === 0" 
+                                    ng-disabled="!models || models.list.length === 0" 
                                     ng-click="saveAndStayAction();">Save and stay on this page</button>
 
                                 &nbsp;

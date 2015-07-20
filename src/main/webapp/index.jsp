@@ -42,6 +42,9 @@
                      class="jobDisplay col-md-4 col-sm-4 col-xs-4" 
                      ng-class="jobValue.associatedJob.lastBuildResult"
                      job="jobValue"
+                     display-for-successful="settings.displayDetailsForSuccessfulJobs"
+                     display-for-unstable="settings.displayDetailsForUnstableJobs"
+                     display-for-failed="settings.displayDetailsForFailedJobs"
                      number-of-jobs="{{jobs.length}}"
                      number-of-columns="3">
                 </div>

@@ -134,6 +134,17 @@ public class ConfigurationManager {
 	return this;
     }
 
+    public boolean updateSettings(JsonObject settingsJson) throws IOException {
+	this.fromJson(settingsJson);
+	this.saveSettingsFile(MONKINS_CONFIG_FILE);
+
+	Logger.getLogger(ConfigurationManager.class.getName()).log(Level.INFO,
+		"Settings successfully updated {0}",
+		settingsJson);
+
+	return true;
+    }
+
     public JsonObject toJson() {
 	JsonObject configJson = new JsonObject();
 
@@ -150,12 +161,20 @@ public class ConfigurationManager {
 
 	JsonArray urls = new JsonArray();
 	for (PollingJob job : this.pollingJobs) {
-	    urls.add(job.toJson());
+	    urls.add(job.toJson(false));
 	}
 
 	configJson.add("urls", urls);
 
 	return configJson;
+    }
+    
+    public JsonObject reloadAndToJson() throws IOException {
+	String settings = this.getSettingsText(this.MONKINS_CONFIG_FILE);
+	JsonObject settingsJson = this.getSettingsJson(settings);
+	this.fromJson(settingsJson);
+	
+	return this.toJson();
     }
 
     private JsonObject getSettingsJson(String settingsText) throws IOException {

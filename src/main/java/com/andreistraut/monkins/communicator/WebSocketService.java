@@ -90,7 +90,6 @@ public class WebSocketService {
 		respond(session, response);
 
 		break;
-
 	    }
 	    case SUBSCRIBE: {
 		if (sessions == null) {
@@ -136,9 +135,30 @@ public class WebSocketService {
 
 		break;
 	    }
+	    case RELOADSETTINGS: {
+		respond(session, new MessageResponse(request.getCallbackId(), true, configManager.reloadAndToJson()));
+
+		break;
+	    }
 	    case UPDATESETTINGS: {
-		respond(session, new MessageResponse(request.getCallbackId(), 200, true, "No-Op", null));
-		
+		try {
+		    ConfigurationManager.getInstance().updateSettings(request.getData());
+		    
+		    if(pollingService != null) {
+			pollingService.updateConfig(ConfigurationManager.getInstance());
+		    }
+
+		    if (sessions != null && !sessions.isEmpty()) {
+			for (Session clientSession : sessions) {
+			    respond(clientSession, new MessageResponse(request.getCallbackId(), 200, true, "UPDATE_SETTINGS",
+				    ConfigurationManager.getInstance().toJson()));
+			}
+		    }
+
+		} catch (Exception e) {
+		    respond(session, new MessageResponse(request.getCallbackId(), 500, true, "Error updating settings: " + e.getMessage()));
+		}
+
 		break;
 	    }
 	    case UNKNOWN:

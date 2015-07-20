@@ -52,15 +52,22 @@ public class PollingJob {
     }
 
     public JsonObject toJson() {
+	return this.toJson(true);
+    }
+
+    public JsonObject toJson(boolean includeChildrenAndInfo) {
 	JsonObject object = new JsonObject();
 
 	object.addProperty("name", this.name);
 	object.addProperty("url", this.url);
 	object.addProperty("order", this.order);
-	object.addProperty("isCancelled", this.isCancelled);
-	object.addProperty("status", this.status);
-	object.addProperty("failCount", this.failCount);
-	object.add("associatedJob", this.associatedJob.toJson());
+
+	if (includeChildrenAndInfo) {
+	    object.addProperty("isCancelled", this.isCancelled);
+	    object.addProperty("status", this.status);
+	    object.addProperty("failCount", this.failCount);
+	    object.add("associatedJob", this.associatedJob.toJson());
+	}
 
 	return object;
     }
@@ -112,7 +119,7 @@ public class PollingJob {
 
 	    if (getFailCount() < ConfigurationManager.getInstance().getFailCountBeforeCancel()
 		    && ConfigurationManager.getInstance().getFailCountBeforeCancel() > 0) {
-		
+
 		try {
 		    Logger.getLogger(PollingJob.class.getName()).log(Level.INFO,
 			    "Retrieving info from url {0}",
