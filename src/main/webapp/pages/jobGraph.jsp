@@ -37,7 +37,7 @@
         <script src="/monkins/scripts/lib/angular/angular.ui.notification.min.js"></script>
         
         <!-- VIS SCRIPTS -->
-        <script src="/monkins/scripts/lib/vis/vis.min.js"></script>        
+        <script src="/monkins/scripts/lib/vis/vis.min.js"></script>
 
         <!-- MONKINS SCRIPTS -->
         <script src="/monkins/scripts/monkins/app.monkins.js"></script>
