@@ -65,7 +65,7 @@
                                                    class="form-control"
                                                    data-toggle="tooltip" 
                                                    data-placement="bottom" 
-                                                   data-original-title=""
+                                                   data-original-title="This needs to be appended to each job's URL to access the respective job's API"
                                                    type="string"                                     
                                                    ng-model="tempSettings.jsonApiSuffix">
                                         </div>
@@ -78,7 +78,7 @@
                                                    class="form-control"
                                                    data-toggle="tooltip" 
                                                    data-placement="bottom" 
-                                                   data-original-title=""
+                                                   data-original-title="Like above, this needs to be appended to each test report's URL to access the respective test report's API"
                                                    type="string"                                     
                                                    ng-model="tempSettings.jsonApiTestReportSuffix">
                                         </div>
@@ -95,7 +95,7 @@
                                                    class="form-control"
                                                    data-toggle="tooltip" 
                                                    data-placement="bottom" 
-                                                   data-original-title=""
+                                                   data-original-title="Time between subsequent pollings for job status updates"
                                                    type="number"
                                                    min="100"
                                                    max="3600000" 
@@ -125,7 +125,7 @@
                                                    class="form-control"
                                                    data-toggle="tooltip" 
                                                    data-placement="bottom" 
-                                                   data-original-title=""
+                                                   data-original-title="If a request for job info fails for some reason, it will fail this many times before being cancelled"
                                                    type="number"
                                                    min="0"
                                                    ng-model="tempSettings.failCountBeforeCancel">
@@ -152,7 +152,7 @@
                                                    class="form-control"
                                                    data-toggle="tooltip" 
                                                    data-placement="bottom" 
-                                                   data-original-title=""
+                                                   data-original-title="Number of columns to present in the job view"
                                                    type="number"
                                                    min="1"
                                                    max="6"
@@ -180,7 +180,7 @@
                                                    class="form-control"
                                                    data-toggle="tooltip" 
                                                    data-placement="bottom" 
-                                                   data-original-title=""
+                                                   data-original-title="How tall each job container is by default"
                                                    type="number"
                                                    min="50"
                                                    max="1024"
@@ -203,7 +203,7 @@
                                         <div class="form-group">
                                             <label class="control-label" for="displayDetailsForSuccessfulJobs"
                                                    data-toggle="tooltip" 
-                                                   data-original-title="">
+                                                   data-original-title="If checked, last build and test report details will be presented for successful jobs">
                                                 Details for Successful Jobs
                                             </label><br/>
                                             <label class="checkbox-inline">
@@ -221,7 +221,7 @@
                                         <div class="form-group">
                                             <label class="control-label" for="displayDetailsForUnstableJobs"
                                                    data-toggle="tooltip" 
-                                                   data-original-title="">
+                                                   data-original-title="If checked, last build and test report details will be presented for unstable jobs">
                                                 Details for Unstable Jobs
                                             </label><br/>
                                             <label class="checkbox-inline">
@@ -239,7 +239,7 @@
                                         <div class="form-group">
                                             <label class="control-label" for="displayDetailsForFailedJobs"
                                                    data-toggle="tooltip" 
-                                                   data-original-title="">
+                                                   data-original-title="If checked, last build and test report details will be presented for failed jobs">
                                                 Details for Failed Jobs
                                             </label><br/>
                                             <label class="checkbox-inline">
@@ -328,8 +328,13 @@
                                                         </div>
 
                                                         <div class="col-md-1 col-sm-1 col-xs-1">
-                                                            <button type="button" class="btn btn-danger btn-circle" ng-click="removeJob(item.order)">
-                                                                <i class="fa fa-remove">                                                                    
+                                                            <button type="button" 
+                                                                    class="btn btn-danger btn-circle" 
+                                                                    ng-click="removeJob(item.order)"
+                                                                    data-toggle="tooltip" 
+                                                                    data-placement="top" 
+                                                                    data-original-title="Remove Job">
+                                                                <i class="fa fa-remove">
                                                                 </i>
                                                             </button>
                                                         </div>
@@ -351,7 +356,8 @@
                                     class="btn btn-primary"
                                     type="submit" 
                                     data-toggle="tooltip" 
-                                    data-original-title=""
+                                    data-placement="top" 
+                                    data-original-title="Save and return to the job view"
                                     ng-disabled="!models || models.list.length === 0" 
                                     ng-click="saveAndReturnAction();">Save and go to main page</button>
 
@@ -362,7 +368,8 @@
                                     class="btn btn-primary"
                                     type="submit" 
                                     data-toggle="tooltip" 
-                                    data-original-title=""
+                                    data-placement="top" 
+                                    data-original-title="Save and stay on this page"
                                     ng-disabled="!models || models.list.length === 0" 
                                     ng-click="saveAndStayAction();">Save and stay on this page</button>
 
