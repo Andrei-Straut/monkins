@@ -3,6 +3,7 @@ package com.andreistraut.monkins.model;
 import com.google.gson.JsonObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -236,7 +237,7 @@ public class DisplayJob {
 	try {
 	    Date date = new java.util.Date(
 		    Long.parseLong(timestamp));
-	    SimpleDateFormat targetDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    SimpleDateFormat targetDateFormat = new SimpleDateFormat("dd MMM yyyy, HH:mm:ss", Locale.ENGLISH);
 	    return targetDateFormat.format(date);
 	} catch (NumberFormatException e) {
 	    Logger.getLogger(DisplayJob.class
