@@ -16,14 +16,6 @@
         <servlet-name>Settings</servlet-name>
         <url-pattern>/settings</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>JobGraph</servlet-name>
-        <servlet-class>com.andreistraut.monkins.controller.JobGraph</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>JobGraph</servlet-name>
-        <url-pattern>/jobGraph</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
