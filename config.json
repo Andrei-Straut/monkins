@@ -1,0 +1,37 @@
+{
+    "JSON_API_SUFFIX": "/api/json",
+    "JSON_API_TEST_REPORT_SUFFIX": "/lastCompletedBuild/testReport/api/json?tree=duration,empty,failCount,skipCount,totalCount,passCount",
+    "numberOfColumns": 3,
+    "numberOfJobs": 18,
+    "defaultJobDisplayHeight": 180,
+    "pollingIntervalMs": 60000,
+    "settingsPollingIntervalMs": 30000,
+    "displayDetailsForSuccessfulJobs": false,
+    "displayDetailsForUnstableJobs": true,
+    "displayDetailsForFailedJobs": true,
+    "urls": [{
+        "name": "Jenkins Core Trunk",
+        "url": "https://ci.jenkins-ci.org/view/Jenkins%20core/job/jenkins_main_trunk/",
+        "order": 1
+    }, {
+        "name": "OpenSUSE Unit Tests",
+        "url": "https://ci.opensuse.org/view/kiwi/job/kiwi-unittest/",
+        "order": 2
+    }, {
+        "name": "OpenStack Dev Stack",
+        "url": "https://ci.opensuse.org/view/OpenStack/job/openstack-devstack/",
+        "order": 3
+    }, {
+        "name": "Apache Hadoop (Trunk Java 8)",
+        "url": "https://builds.apache.org/job/Hadoop-common-trunk-Java8/",
+        "order": 4
+    }, {
+        "name": "Apache CXF 3",
+        "url": "https://builds.apache.org/view/All/job/CXF-3.0.x/",
+        "order": 5
+    }, {
+        "name": "CyanogenMod Android",
+        "url": "http://jenkins.cyanogenmod.com/job/android/",
+        "order": 6
+    }]
+}
