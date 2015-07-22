@@ -6,7 +6,6 @@ public enum MessageType {
     UNSUBSCRIBE,
     UNSUBSCRIBEALL,
     GETSETTINGS,
-    RELOADSETTINGS,
     UPDATESETTINGS,
     UNKNOWN
 }

@@ -11,7 +11,7 @@ public class MessageRequest {
     private MessageType type;
     private JsonObject data;
 
-    public MessageRequest(String request) throws JsonSyntaxException {
+    public MessageRequest(String request) throws JsonSyntaxException, NullPointerException {
 	JsonObject requestJson = (new JsonParser()).parse(request).getAsJsonObject();
 	this.fromJson(requestJson);
     }

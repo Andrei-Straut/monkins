@@ -145,7 +145,17 @@ public class ConfigurationManager {
 	return true;
     }
 
-    public JsonObject toJson() {
+    public JsonObject toJson() throws IOException {
+	return this.toJson(true);
+    }
+
+    public JsonObject toJson(boolean reloadFromDisk) throws IOException {
+	if (reloadFromDisk) {
+	    String settings = this.getSettingsText(this.MONKINS_CONFIG_FILE);
+	    JsonObject settingsJson = this.getSettingsJson(settings);
+	    this.fromJson(settingsJson);
+	}
+
 	JsonObject configJson = new JsonObject();
 
 	configJson.addProperty("jsonApiSuffix", this.JSON_API_SUFFIX);
@@ -167,14 +177,6 @@ public class ConfigurationManager {
 	configJson.add("urls", urls);
 
 	return configJson;
-    }
-    
-    public JsonObject reloadAndToJson() throws IOException {
-	String settings = this.getSettingsText(this.MONKINS_CONFIG_FILE);
-	JsonObject settingsJson = this.getSettingsJson(settings);
-	this.fromJson(settingsJson);
-	
-	return this.toJson();
     }
 
     private JsonObject getSettingsJson(String settingsText) throws IOException {

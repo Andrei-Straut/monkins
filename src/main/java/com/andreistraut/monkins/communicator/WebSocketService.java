@@ -1,13 +1,11 @@
 package com.andreistraut.monkins.communicator;
 
-import com.andreistraut.monkins.model.ConfigurationManager;
-import com.andreistraut.monkins.model.PollingJob;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.andreistraut.monkins.communicator.dispatchers.MessageDispatcher;
+import com.andreistraut.monkins.communicator.dispatchers.MessageDispatcherFactory;
+import com.andreistraut.monkins.communicator.dispatchers.UnsubscribeMessageDispatcher;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
@@ -64,115 +62,25 @@ public class WebSocketService {
 		    .setDescription("Error occurred processing message request: " + message);
 	    respond(session, response);
 	    return;
+	} catch (NullPointerException e) {
+	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE,
+		    "{0}: Could not parse JSON request: {1}", new Object[]{session.getId(), e});
+
+	    response = new MessageResponse(0);
+	    response
+		    .setStatus(HttpServletResponse.SC_BAD_REQUEST)
+		    .setIsEnded(true)
+		    .setDescription("Error occurred processing message request: " + message);
+	    respond(session, response);
+	    return;
 	}
 
-	switch (request.getType()) {
-	    case GETJOBSLIST: {
-
-		try {
-		    CopyOnWriteArrayList<PollingJob> jobs = ConfigurationManager.getInstance().getPollingJobs();
-		    JsonArray jobsJson = new JsonArray();
-
-		    for (PollingJob job : jobs) {
-			jobsJson.add(job.toJson());
-		    }
-
-		    JsonObject responseData = new JsonObject();
-		    responseData.add("jobs", jobsJson);
-
-		    response = new MessageResponse(request.getCallbackId(), 200, true, "JobList", responseData);
-		    respond(session, response);
-		} catch(Exception e) {
-		    response = new MessageResponse(request.getCallbackId(), 200, true, "Error retrieving jobs" + e.getMessage());
-		    respond(session, response);		    
-		}
-
-		break;
-	    }
-	    case SUBSCRIBE: {
-		if (sessions == null) {
-		    sessions = new ArrayList<>();
-		}
-
-		if (!sessions.isEmpty() && sessions.contains(session)) {
-		    sessions.remove(session);
-		}
-
-		sessions.add(session);
-		Logger.getLogger(WebSocketService.class.getName()).log(
-			Level.INFO, "{0}: {1}",
-			new Object[]{session.getId(), "Added to subscribers list"});
-
-		pollingService.start();
-
-		respond(session, new MessageResponse(request.getCallbackId(), 200, false, "Subscribe", new JsonObject()));
-		break;
-	    }
-	    case UNSUBSCRIBE: {
-		unsubscribeClient(session);
-		respond(session, new MessageResponse(request.getCallbackId(), 200, false, "Unsubscribe", new JsonObject()));
-
-		break;
-	    }
-	    case UNSUBSCRIBEALL: {
-		if (sessions != null && !sessions.isEmpty()) {
-		    for (Session clientSession : sessions) {
-			unsubscribeClient(clientSession);
-		    }
-		}
-
-		sessions.clear();
-		this.pollingService.stop();
-
-		respond(session, new MessageResponse(request.getCallbackId(), true, new JsonObject()));
-
-		break;
-	    }
-	    case GETSETTINGS: {
-		respond(session, new MessageResponse(request.getCallbackId(), true, ConfigurationManager.getInstance().reloadAndToJson()));
-
-		break;
-	    }
-	    case RELOADSETTINGS: {
-		respond(session, new MessageResponse(request.getCallbackId(), true, ConfigurationManager.getInstance().reloadAndToJson()));
-
-		break;
-	    }
-	    case UPDATESETTINGS: {
-		try {
-		    ConfigurationManager.getInstance().updateSettings(request.getData());
-
-		    if (pollingService != null) {
-			pollingService.updateConfig(ConfigurationManager.getInstance());
-		    }
-
-		    if (sessions != null && !sessions.isEmpty()) {
-			for (Session clientSession : sessions) {
-			    respond(clientSession, new MessageResponse(request.getCallbackId(), 200, true, "UPDATE_SETTINGS",
-				    ConfigurationManager.getInstance().toJson()));
-			}
-		    }
-
-		} catch (Exception e) {
-		    respond(session, new MessageResponse(request.getCallbackId(), 500, true, "Error updating settings: " + e.getMessage()));
-		}
-
-		break;
-	    }
-	    case UNKNOWN:
-	    default: {
-
-		Logger.getLogger(WebSocketService.class.getName()).log(Level.WARNING,
-			"{0}: Message type unknown: {1}", new Object[]{session.getId(), message});
-
-		response = new MessageResponse(request.getCallbackId());
-		response
-			.setStatus(HttpServletResponse.SC_BAD_REQUEST)
-			.setIsEnded(true)
-			.setDescription("Message type unknown");
-		respond(session, response);
-	    }
-	}
+	MessageDispatcherFactory dispatcherFactory = new MessageDispatcherFactory(this, session, pollingService);
+	dispatcherFactory.setSessions(sessions);
+	
+	MessageDispatcher dispatcher = dispatcherFactory.getDispatcher(request.getType());
+	dispatcherFactory.initDispatcherRequest(dispatcher, request);
+	dispatcherFactory.process(dispatcher);
     }
 
     @OnClose
@@ -183,7 +91,16 @@ public class WebSocketService {
 			Level.INFO, "{0}: {1}",
 			new Object[]{session.getId(), "Connection closed"});
 
-	unsubscribeClient(session);
+	MessageDispatcherFactory dispatcherFactory = new MessageDispatcherFactory(this, session, pollingService);
+	dispatcherFactory.setSessions(sessions);
+	UnsubscribeMessageDispatcher unsubscriber = new UnsubscribeMessageDispatcher(this, pollingService, session, MessageType.UNSUBSCRIBE);
+	try {
+	    dispatcherFactory.process(unsubscriber);
+	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Session with id {0} unsubscribed. Open sessions left: {1}", 
+		    new Object[] {session.getId(), sessions.size()});
+	} catch (Exception ex) {
+	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Error occurred unsubscribing client on close event", ex);
+	}
     }
 
     public static void respond(Session session, MessageResponse response) {
@@ -198,7 +115,7 @@ public class WebSocketService {
 	}
     }
 
-    public static void respondAll(MessageResponse response) {
+    public static void respondAll(MessageResponse response) {			
 	if (sessions == null || sessions.isEmpty()) {
 	    return;
 	}
@@ -225,30 +142,11 @@ public class WebSocketService {
 	}
     }
 
-    private void unsubscribeClient(Session session) throws IOException {
-	if (sessions != null && !sessions.isEmpty()) {
-	    if (sessions.contains(session)) {
-		sessions.remove(session);
+    public static ArrayList<Session> getSessions() {
+	return sessions;
+    }
 
-		Logger.getLogger(WebSocketService.class
-			.getName()).log(
-				Level.INFO, "{0}: {1}",
-				new Object[]{session.getId(), "Client unsubscribed"});
-
-	    } else {
-		Logger.getLogger(WebSocketService.class
-			.getName()).log(
-				Level.INFO, "{0}: {1}",
-				new Object[]{session.getId(), "Client session not found in subscribers list"});
-	    }
-	}
-
-	if (sessions != null && sessions.isEmpty()
-		&& this.pollingService != null) {
-	    this.pollingService.stop();
-
-	    Logger.getLogger(WebSocketService.class.getName()).log(
-		    Level.INFO, "Polling service stopped");
-	}
+    public static void initSessions() {
+	sessions = new ArrayList<Session>();
     }
 }
