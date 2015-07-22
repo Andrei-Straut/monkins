@@ -84,7 +84,6 @@ public class PollingService {
 	    for (TimerTask task : this.tasks) {
 		if (task != null) {
 		    task.cancel();
-		    task = null;
 		}
 	    }
 	    

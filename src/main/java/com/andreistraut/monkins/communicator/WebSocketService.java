@@ -77,7 +77,7 @@ public class WebSocketService {
 
 	MessageDispatcherFactory dispatcherFactory = new MessageDispatcherFactory(this, session, pollingService);
 	dispatcherFactory.setSessions(sessions);
-	
+
 	MessageDispatcher dispatcher = dispatcherFactory.getDispatcher(request.getType());
 	dispatcherFactory.initDispatcherRequest(dispatcher, request);
 	dispatcherFactory.process(dispatcher);
@@ -96,8 +96,8 @@ public class WebSocketService {
 	UnsubscribeMessageDispatcher unsubscriber = new UnsubscribeMessageDispatcher(this, pollingService, session, MessageType.UNSUBSCRIBE);
 	try {
 	    dispatcherFactory.process(unsubscriber);
-	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Session with id {0} unsubscribed. Open sessions left: {1}", 
-		    new Object[] {session.getId(), sessions.size()});
+	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Session with id {0} unsubscribed. Open sessions left: {1}",
+		    new Object[]{session.getId(), sessions.size()});
 	} catch (Exception ex) {
 	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Error occurred unsubscribing client on close event", ex);
 	}
@@ -131,7 +131,9 @@ public class WebSocketService {
 			    "{0}: Sending update: {1}",
 			    new Object[]{session.getId(), response.toJsonString()});
 	    try {
-		session.getBasicRemote().sendText(response.toJsonString());
+		if (session.isOpen()) {
+		    session.getBasicRemote().sendText(response.toJsonString());
+		}
 
 	    } catch (IOException e) {
 		Logger.getLogger(WebSocketService.class

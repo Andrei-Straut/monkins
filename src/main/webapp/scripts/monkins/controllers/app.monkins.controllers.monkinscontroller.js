@@ -69,7 +69,6 @@ monkins.controller('monkinscontroller', ['$rootScope', '$scope', 'WebSocketFacto
 
         $rootScope.$on('UPDATE_SETTINGS', function (event, data) {
             console.log("Updating settings");
-            WebSocketFactory.unsubscribe();
             $scope.init();
             console.log("Updated settings");
         });

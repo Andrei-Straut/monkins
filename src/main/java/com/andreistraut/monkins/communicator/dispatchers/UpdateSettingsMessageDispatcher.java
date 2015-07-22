@@ -45,6 +45,8 @@ public class UpdateSettingsMessageDispatcher extends MessageDispatcher {
 	    ConfigurationManager.getInstance().updateSettings(request.getData());
 	    pollingService.notifyUpdateConfig();
 	    
+	    respond(session, new MessageResponse(request.getCallbackId(), 200, true, "Ok",
+		    ConfigurationManager.getInstance().toJson()));
 	    respondAll(new MessageResponse(request.getCallbackId(), 200, true, "UPDATE_SETTINGS",
 		    ConfigurationManager.getInstance().toJson()));
 
