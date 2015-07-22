@@ -26,7 +26,7 @@ public class PollingService {
 
 	if (this.tasks != null && !this.tasks.isEmpty() && this.timer != null) {
 	    for (PollingJob job : ConfigurationManager.getInstance().getPollingJobs()) {
-		MessageResponse response = new MessageResponse(0, 200, false, "UPDATE", job.toJson());
+		MessageResponse response = new MessageResponse(0, 200, false, "UPDATEJOB", job.toJson());
 		WebSocketService.respondAll(response);
 	    }
 

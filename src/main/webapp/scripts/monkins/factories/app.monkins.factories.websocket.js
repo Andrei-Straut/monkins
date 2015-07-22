@@ -139,7 +139,6 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                     {
                         console.log("Message description unknown: ", messageObj.description);
                     }
-
                 }
 
                 delete callbacks[messageObj.callbackID];
