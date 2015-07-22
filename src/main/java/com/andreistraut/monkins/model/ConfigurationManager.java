@@ -188,9 +188,8 @@ public class ConfigurationManager {
 		    settingsText);
 	    return settingsJson;
 	} catch (Exception e) {
-	    Logger.getLogger(ConfigurationManager.class.getName()).log(Level.WARNING,
-		    "Settings could not be converted to JSON: {0} {1}",
-		    new Object[]{e.getMessage(), settingsText});
+	    Logger.getLogger(ConfigurationManager.class.getName()).log(Level.SEVERE, 
+		    "Settings could not be converted to JSON", e);
 	    throw e;
 	}
     }
@@ -209,6 +208,10 @@ public class ConfigurationManager {
 		    builder.append(line);
 		    builder.append(System.lineSeparator());
 		    line = reader.readLine();
+		}
+		
+		if(builder.toString().trim().replace(" ", "").isEmpty()) {
+		    throw new IOException("Empty settings file");
 		}
 
 		Logger.getLogger(ConfigurationManager.class.getName()).log(Level.INFO,
@@ -247,7 +250,7 @@ public class ConfigurationManager {
 		configFile.createNewFile();
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String contents = gson.toJson(this.toJson());
+		String contents = gson.toJson(this.toJson(false));
 
 		Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile), "utf-8"));
 		writer.write(contents);

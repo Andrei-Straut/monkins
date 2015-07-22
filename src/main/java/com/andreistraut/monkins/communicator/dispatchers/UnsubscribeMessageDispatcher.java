@@ -47,7 +47,7 @@ public class UnsubscribeMessageDispatcher extends MessageDispatcher {
     @Override
     boolean process() throws Exception {
 	if (this.service.getSessions() != null && !this.service.getSessions().isEmpty()) {
-	    if (this.service.getSessions().contains(session)) {
+	    if (this.service.getSessions().contains(session) && session.isOpen()) {
 		session.close(new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE, "Close requested"));
 		this.service.getSessions().remove(session);
 

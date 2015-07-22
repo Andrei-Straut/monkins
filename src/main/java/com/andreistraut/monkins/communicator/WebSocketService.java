@@ -115,7 +115,7 @@ public class WebSocketService {
 	}
     }
 
-    public static void respondAll(MessageResponse response) {			
+    public static void respondAll(MessageResponse response) {
 	if (sessions == null || sessions.isEmpty()) {
 	    return;
 	}
