@@ -27,7 +27,6 @@ import javax.websocket.server.ServerEndpoint;
 public class WebSocketService {
 
     private static ArrayList<Session> sessions;
-    private ConfigurationManager configManager;
     private PollingService pollingService;
 
     @OnOpen
@@ -35,12 +34,6 @@ public class WebSocketService {
 	Logger.getLogger(WebSocketService.class.getName()).log(
 		Level.INFO, "{0}: {1}",
 		new Object[]{session.getId(), "Connection opened"});
-
-	if (this.configManager == null) {
-	    this.configManager = ConfigurationManager.getInstance();
-	    Logger.getLogger(WebSocketService.class.getName()).log(
-		    Level.INFO, "ConfigurationManager retrieved");
-	}
 
 	if (this.pollingService == null) {
 	    this.pollingService = new PollingService();
@@ -76,18 +69,23 @@ public class WebSocketService {
 	switch (request.getType()) {
 	    case GETJOBSLIST: {
 
-		CopyOnWriteArrayList<PollingJob> jobs = configManager.getPollingJobs();
-		JsonArray jobsJson = new JsonArray();
+		try {
+		    CopyOnWriteArrayList<PollingJob> jobs = ConfigurationManager.getInstance().getPollingJobs();
+		    JsonArray jobsJson = new JsonArray();
 
-		for (PollingJob job : jobs) {
-		    jobsJson.add(job.toJson());
+		    for (PollingJob job : jobs) {
+			jobsJson.add(job.toJson());
+		    }
+
+		    JsonObject responseData = new JsonObject();
+		    responseData.add("jobs", jobsJson);
+
+		    response = new MessageResponse(request.getCallbackId(), 200, true, "JobList", responseData);
+		    respond(session, response);
+		} catch(Exception e) {
+		    response = new MessageResponse(request.getCallbackId(), 200, true, "Error retrieving jobs" + e.getMessage());
+		    respond(session, response);		    
 		}
-
-		JsonObject responseData = new JsonObject();
-		responseData.add("jobs", jobsJson);
-
-		response = new MessageResponse(request.getCallbackId(), 200, true, "JobList", responseData);
-		respond(session, response);
 
 		break;
 	    }
@@ -131,12 +129,12 @@ public class WebSocketService {
 		break;
 	    }
 	    case GETSETTINGS: {
-		respond(session, new MessageResponse(request.getCallbackId(), true, configManager.toJson()));
+		respond(session, new MessageResponse(request.getCallbackId(), true, ConfigurationManager.getInstance().reloadAndToJson()));
 
 		break;
 	    }
 	    case RELOADSETTINGS: {
-		respond(session, new MessageResponse(request.getCallbackId(), true, configManager.reloadAndToJson()));
+		respond(session, new MessageResponse(request.getCallbackId(), true, ConfigurationManager.getInstance().reloadAndToJson()));
 
 		break;
 	    }

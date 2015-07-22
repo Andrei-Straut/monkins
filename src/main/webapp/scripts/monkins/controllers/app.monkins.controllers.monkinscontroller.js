@@ -4,6 +4,7 @@ monkins.controller('monkinscontroller', ['$rootScope', '$scope', 'WebSocketFacto
     function ($rootScope, $scope, WebSocketFactory) {
         $scope.jobs = [];
         $scope.settings = {};
+        $scope.errorText = '';
 
         $scope.init = function () {
             var interval = window.setInterval(function () {
@@ -72,5 +73,10 @@ monkins.controller('monkinscontroller', ['$rootScope', '$scope', 'WebSocketFacto
             $scope.init();
             console.log("Updated settings");
         });
+
+        $scope.notifyError = function (notification, $modalElement) {
+            $scope.errorText = notification;
+            $modalElement.modal('show');
+        };
     }]);
 

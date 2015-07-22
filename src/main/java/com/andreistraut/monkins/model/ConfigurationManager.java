@@ -229,6 +229,7 @@ public class ConfigurationManager {
 	} else {
 	    configFile.getParentFile().mkdirs();
 	    configFile.createNewFile();
+	    this.saveSettingsFile(configFilePath);
 	}
 
 	return null;
