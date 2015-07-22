@@ -18,7 +18,7 @@ monkins.controller('monkinscontroller', ['$rootScope', '$scope', 'WebSocketFacto
                 }).catch(function (e) {
                     console.log(e.description);
                 });
-                
+
                 var pollingJobs = WebSocketFactory.getJobsList();
                 pollingJobs.then(function (response) {
                     if (response.status === 200) {
@@ -54,23 +54,24 @@ monkins.controller('monkinscontroller', ['$rootScope', '$scope', 'WebSocketFacto
                     }
                 }, function (error) {
                     console.log(error.description);
-                }, function (update) {
-                    var data = update.data;
-
-                    for (var i = 0; i < $scope.jobs.length; i++) {
-                        if (($scope.jobs[i]).name === data.name) {
-                            $scope.jobs[i] = data;
-                            console.log("Job updated: ", ($scope.jobs[i]).name);
-                        }
-                    }
                 });
             }
         };
 
-        $rootScope.$on('UPDATE_SETTINGS', function (event, data) {
+        $rootScope.$on('UPDATESETTINGS', function (event, data) {
             console.log("Updating settings");
             $scope.init();
             console.log("Updated settings");
+        });
+
+        $rootScope.$on('UPDATEJOB', function (event, data) {
+            for (var i = 0; i < $scope.jobs.length; i++) {
+                if (($scope.jobs[i]).name === data.name) {
+                    $scope.jobs[i] = data;
+                    console.log("Job updated: ", ($scope.jobs[i]).name);
+                    $scope.$apply();
+                }
+            }
         });
 
         $scope.notifyError = function (notification, $modalElement) {

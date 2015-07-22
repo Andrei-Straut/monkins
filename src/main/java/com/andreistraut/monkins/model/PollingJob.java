@@ -152,7 +152,7 @@ public class PollingJob {
 		    if (this.associatedJob.hasChanged()) {
 			Logger.getLogger(PollingJob.class.getName()).log(Level.INFO, "Info for job {0} updated", this.name);
 
-			MessageResponse response = new MessageResponse(0, 200, false, "UPDATE", this.toJson());
+			MessageResponse response = new MessageResponse(0, 200, false, "UPDATEJOB", this.toJson());
 			WebSocketService.respondAll(response);
 			this.associatedJob.setHasChanged(false);
 		    }

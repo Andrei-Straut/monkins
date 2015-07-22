@@ -13,6 +13,9 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
         // Create our websocket object with the address to the websocket
         var ws = new WebSocket(wsURL);
 
+        var UPDATE_JOB_MESSAGE = 'UPDATEJOB';
+        var UPDATE_SETTINGS_MESSAGE = 'UPDATESETTINGS';
+
         ws.onopen = function (event) {
             console.log("Socket opened!");
         };
@@ -46,14 +49,6 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
             var promise = sendRequest(request);
             return promise;
         };
-        Service.unSubscribeAll = function () {
-            var request = {
-                type: "UnsubscribeAll",
-                data: {}
-            };
-            var promise = sendRequest(request);
-            return promise;
-        };
         Service.unsubscribe = function () {
             var request = {
                 type: "Unsubscribe",
@@ -62,17 +57,17 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
             var promise = sendRequest(request);
             return promise;
         };
-        Service.getSettings = function () {
+        Service.unSubscribeAll = function () {
             var request = {
-                type: "GetSettings",
+                type: "UnsubscribeAll",
                 data: {}
             };
             var promise = sendRequest(request);
             return promise;
         };
-        Service.reloadSettings = function () {
+        Service.getSettings = function () {
             var request = {
-                type: "ReloadSettings",
+                type: "GetSettings",
                 data: {}
             };
             var promise = sendRequest(request);
@@ -122,30 +117,47 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
         function listener(data) {
             var messageObj = data;
             // If an object exists with callback_id in our callbacks object, resolve it
+            console.log("Received: ", messageObj);
+
+            //If we have an UPDATE or UPDATE_SETTINGS message, we don't care much about callback id
+            if (messageObj.description
+                    && (messageObj.description.toUpperCase() === UPDATE_JOB_MESSAGE
+                            || messageObj.description.toUpperCase() === UPDATE_SETTINGS_MESSAGE)) {
+
+                switch (messageObj.description.toUpperCase()) {
+                    case UPDATE_JOB_MESSAGE:
+                    {
+                        $rootScope.$emit('UPDATEJOB', messageObj.data);
+                        break;
+                    }
+                    case UPDATE_SETTINGS_MESSAGE:
+                    {
+                        $rootScope.$emit('UPDATESETTINGS', messageObj.data);
+                        break;
+                    }
+                    default:
+                    {
+                        console.log("Message description unknown: ", messageObj.description);
+                    }
+
+                }
+
+                delete callbacks[messageObj.callbackID];
+                return;
+            }
+
+            // If an object exists with callback_id in our callbacks object, resolve it
             if (callbacks.hasOwnProperty(messageObj.callback_id)) {
                 $rootScope.$apply(callbacks[messageObj.callback_id].cb.notify(messageObj));
                 if (messageObj.callback_id && messageObj.isEnded && messageObj.isEnded === true) {
                     $rootScope.$apply(callbacks[messageObj.callback_id].cb.resolve(messageObj));
-
-                    if (messageObj && messageObj.description && messageObj.description === 'UPDATE_SETTINGS' && messageObj.data) {
-                        console.log("Received settings message: ", messageObj);
-                        $rootScope.$emit('UPDATE_SETTINGS', messageObj.data);
-                    }
-                    
                     console.log("Received response: ", messageObj);
                     console.log("Request with id " + messageObj.callback_id + " completed");
                     delete callbacks[messageObj.callbackID];
-                } else {
-                    console.log("Received update: ", messageObj);
                 }
                 //If not, we have a standalone message, log it
             } else {
-                if (messageObj && messageObj.description === 'UPDATE_SETTINGS') {
-                    if (messageObj.data) {
-                        $rootScope.$emit('UPDATE_SETTINGS', messageObj.data);
-                    }
-                }
-                console.log("Received: ", messageObj);
+                console.log("Received message: ", messageObj);
             }
         }
 

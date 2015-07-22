@@ -47,7 +47,7 @@ public class UpdateSettingsMessageDispatcher extends MessageDispatcher {
 	    
 	    respond(session, new MessageResponse(request.getCallbackId(), 200, true, "Ok",
 		    ConfigurationManager.getInstance().toJson()));
-	    respondAll(new MessageResponse(request.getCallbackId(), 200, true, "UPDATE_SETTINGS",
+	    respondAll(new MessageResponse(request.getCallbackId(), 200, true, "UPDATESETTINGS",
 		    ConfigurationManager.getInstance().toJson()));
 
 	} catch (Exception e) {
