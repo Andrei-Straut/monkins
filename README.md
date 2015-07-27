@@ -23,6 +23,8 @@ Also, at the moment we don't handle Monkins authentication (and by this I mean a
 
 WebSockets might also be a limitation in some environments. In order to avoid constant polling and refreshes from the browser page, Monkins instead polls from the server and pushes only the updates to the client. This means that both the server where Monkins runs and the browser used to access it must support WebSockets (no worries, everything newer than Internet Explorer 9, and Chrome of Firefox newer than ~3 years already do). A list of who does it can be found [here](http://caniuse.com/#feat=websockets).
 
+For other problems / issues, take a look at the [issues page](https://github.com/Andrei-Straut/monkins/issues).
+
 ### How do I set it up?
 Just deploy Monkins on your server, than head up to
 ```java
