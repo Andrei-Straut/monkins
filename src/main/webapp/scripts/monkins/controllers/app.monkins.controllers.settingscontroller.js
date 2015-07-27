@@ -62,8 +62,10 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
         };
 
         $scope.saveSettings = function () {
-            var newSettings = $scope.compileSettings();
-            if (!newSettings || !newSettings.urls || newSettings.urls.length === 0) {
+            $scope.tempSettings.urls = [];
+            angular.copy($scope.models.list, $scope.tempSettings.urls);
+            
+            if (!$scope.tempSettings.urls || $scope.tempSettings.urls.length === 0) {
                 $scope.notifyError("List of URLs cannot be empty", $('#modalError'));
             } else {
                 var interval = window.setInterval(function () {
@@ -141,14 +143,6 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
             $scope.saveSettings();
 
             window.location = "/monkins";
-        };
-
-        $scope.compileSettings = function () {
-            var newSettings = {};
-            angular.copy($scope.tempSettings, newSettings);
-            angular.copy($scope.models.list, newSettings.urls);
-
-            return newSettings;
         };
 
         $scope.notifyError = function (notification, $modalElement) {
