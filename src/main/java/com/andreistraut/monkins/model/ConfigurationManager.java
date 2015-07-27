@@ -187,7 +187,7 @@ public class ConfigurationManager {
 		    settingsText);
 	    return settingsJson;
 	} catch (Exception e) {
-	    Logger.getLogger(ConfigurationManager.class.getName()).log(Level.SEVERE, 
+	    Logger.getLogger(ConfigurationManager.class.getName()).log(Level.SEVERE,
 		    "Settings could not be converted to JSON", e);
 	    throw e;
 	}
@@ -195,6 +195,10 @@ public class ConfigurationManager {
 
     private String getSettingsText(String configFilePath) throws IOException {
 	File configFile = new File(configFilePath);
+
+	Logger.getLogger(ConfigurationManager.class.getName()).log(Level.INFO,
+		"Reading settings from {0}",
+		configFile.getAbsolutePath());
 
 	if (configFile.exists()) {
 	    BufferedReader reader = null;
@@ -208,8 +212,8 @@ public class ConfigurationManager {
 		    builder.append(System.lineSeparator());
 		    line = reader.readLine();
 		}
-		
-		if(builder.toString().trim().replace(" ", "").isEmpty()) {
+
+		if (builder.toString().trim().replace(" ", "").isEmpty()) {
 		    throw new IOException("Empty settings file");
 		}
 
@@ -231,9 +235,15 @@ public class ConfigurationManager {
 		}
 	    }
 	} else {
-	    configFile.getParentFile().mkdirs();
-	    configFile.createNewFile();
-	    this.saveSettingsFile(configFilePath);
+	    try {
+		configFile.getParentFile().mkdirs();
+		configFile.createNewFile();
+		this.saveSettingsFile(configFilePath);
+	    } catch (IOException e) {
+		Logger.getLogger(ConfigurationManager.class.getName()).log(Level.SEVERE,
+			"Settings file at given path {0} does not exist, is a directory, or is not readable. Settings file could not be successfully created",
+			configFile.getAbsolutePath());
+	    }
 	}
 
 	return null;
