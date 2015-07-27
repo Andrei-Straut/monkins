@@ -91,7 +91,7 @@ monkins.directive("displayJob", ['$window', function ($window) {
 
                         var jobData = scope.job.associatedJob;
 
-                        text = 'Test Results: ';
+                        text = 'Tests: ';
 
                         if (checkData(jobData.lastTestPassCount) && jobData.lastTestPassCount >= 0) {
                             text += 'Passed: ' + scope.job.associatedJob.lastTestPassCount;
@@ -108,7 +108,7 @@ monkins.directive("displayJob", ['$window', function ($window) {
                             }
                             text += 'Skipped: ' + scope.job.associatedJob.lastTestSkipCount;
                         }
-                        if (checkData(jobData.lastTestTotalCount) && jobData.lastTestTotalCount >= 0) {
+                        if (checkData(jobData.lastTestTotalCount) && jobData.lastTestTotalCount > 0) {
                             if (text.trim() !== '') {
                                 text += ', ';
                             }
