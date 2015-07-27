@@ -25,8 +25,8 @@
         <!-- ANGULAR SCRIPTS -->
         <script src="scripts/lib/angular/angular.min.js"></script>
         <script src="scripts/lib/angular/angular.ui.bootstrap.tpls.min.js"></script>
-        <script src="/monkins/scripts/lib/angular/angular.draganddrop.js"></script>
-        <script src="/monkins/scripts/lib/angular/angular.ui.notification.min.js"></script>
+        <script src="scripts/lib/angular/angular.draganddrop.js"></script>
+        <script src="scripts/lib/angular/angular.ui.notification.min.js"></script>
 
         <!-- MONKINS SCRIPTS -->
         <script src="scripts/monkins/app.monkins.js"></script>

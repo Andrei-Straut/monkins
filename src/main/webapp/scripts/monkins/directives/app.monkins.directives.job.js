@@ -42,18 +42,15 @@ monkins.directive("displayJob", ['$window', function ($window) {
 
                 function watchObject() {
                     return scope.job;
-                }
-                ;
+                };
 
                 function handleUpdate(jobValueOld, jobValueNew, $scope) {
-                }
-                ;
+                };
 
                 function getHeight() {
                     var lines = Math.ceil(scope.numberOfJobs / scope.numberOfColumns);
                     return (document.documentElement.clientHeight / (lines)) + "px";
-                }
-                ;
+                };
 
                 function lastStable() {
                     var text = '';
@@ -83,8 +80,7 @@ monkins.directive("displayJob", ['$window', function ($window) {
                     }
 
                     return text;
-                }
-                ;
+                };
 
                 function testDetails() {
                     var text = '';
@@ -162,10 +158,9 @@ monkins.directive("displayJob", ['$window', function ($window) {
                     }
 
                     return display;
-                }
-                ;
+                };
             },
-            templateUrl: '/monkins/pages/jobTemplate.jsp'
+            templateUrl: 'pages/jobTemplate.jsp'
         };
     }]);
 

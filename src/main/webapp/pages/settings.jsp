@@ -8,37 +8,37 @@
         <title>Monkins Settings</title>
 
         <!-- ANGULAR STYLES-->
-        <link rel="stylesheet" href="/monkins/css/lib/angular/angular.draganddrop.css"/>
-        <link rel="stylesheet" href="/monkins/css/lib/angular/angular.ui-notification.css"/>
+        <link rel="stylesheet" href="../css/lib/angular/angular.draganddrop.css"/>
+        <link rel="stylesheet" href="../css/lib/angular/angular.ui-notification.css"/>
 
         <!-- BOOTSTRAP STYLES-->
-        <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.toggle.css"/>
-        <link rel="stylesheet" href="/monkins/css/lib/bootstrap/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../css/lib/bootstrap/bootstrap.toggle.css"/>
+        <link rel="stylesheet" href="../css/lib/bootstrap/bootstrap.min.css"/>
 
         <!-- FONTAWESOME STYLES-->
-        <link rel="stylesheet" href="/monkins/css/lib/font-awesome/font-awesome.css"/>
+        <link rel="stylesheet" href="../css/lib/font-awesome/font-awesome.css"/>
 
         <!-- MONKINS STYLES-->
-        <link rel="stylesheet" href="/monkins/css/monkins/monkins.css"/>
+        <link rel="stylesheet" href="../css/monkins/monkins.css"/>
 
         <!-- JQUERY SCRIPTS -->
-        <script src="/monkins/scripts/lib/jquery/jquery-2.1.3.min.js"></script>
+        <script src="../scripts/lib/jquery/jquery-2.1.3.min.js"></script>
 
         <!-- BOOTSTRAP SCRIPTS -->
-        <script src="/monkins/scripts/lib/bootstrap/bootstrap.min.js"></script>
+        <script src="../scripts/lib/bootstrap/bootstrap.min.js"></script>
         <script src="scripts/lib/bootstrap/bootstrap.toggle.min.js"></script>
 
         <!-- ANGULAR SCRIPTS -->
-        <script src="/monkins/scripts/lib/angular/angular.min.js"></script>
-        <script src="/monkins/scripts/lib/angular/angular.ui.bootstrap.tpls.min.js"></script>
-        <script src="/monkins/scripts/lib/angular/angular.draganddrop.js"></script>
-        <script src="/monkins/scripts/lib/angular/angular.ui.notification.min.js"></script>
+        <script src="../scripts/lib/angular/angular.min.js"></script>
+        <script src="../scripts/lib/angular/angular.ui.bootstrap.tpls.min.js"></script>
+        <script src="../scripts/lib/angular/angular.draganddrop.js"></script>
+        <script src="../scripts/lib/angular/angular.ui.notification.min.js"></script>
 
         <!-- MONKINS SCRIPTS -->
-        <script src="/monkins/scripts/monkins/app.monkins.js"></script>
-        <script src="/monkins/scripts/monkins/factories/app.monkins.factories.websocket.js"></script>
-        <script src="/monkins/scripts/monkins/controllers/app.monkins.controllers.settingscontroller.js"></script>
-        <script src="/monkins/scripts/monkins/directives/app.monkins.directives.validation.jobUrl.js"></script>
+        <script src="../scripts/monkins/app.monkins.js"></script>
+        <script src="../scripts/monkins/factories/app.monkins.factories.websocket.js"></script>
+        <script src="../scripts/monkins/controllers/app.monkins.controllers.settingscontroller.js"></script>
+        <script src="../scripts/monkins/directives/app.monkins.directives.validation.jobUrl.js"></script>
     </head>
 
     <body ng-controller="settingscontroller" ng-init="init();">
