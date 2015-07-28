@@ -25,6 +25,10 @@ public class PollingService {
     public void start() throws Exception {
 
 	if (this.tasks != null && !this.tasks.isEmpty() && this.timer != null) {
+
+	    Logger.getLogger(ConfigurationManager.class.getName()).log(Level.INFO,
+		    "Polling service already started, returning job statuses");
+
 	    for (PollingJob job : ConfigurationManager.getInstance().getPollingJobs()) {
 		MessageResponse response = new MessageResponse(0, 200, false, "UPDATEJOB", job.toJson());
 		WebSocketService.respondAll(response);
@@ -66,7 +70,7 @@ public class PollingService {
 
 	for (TimerTask task : this.tasks) {
 	    this.timer.scheduleAtFixedRate(task,
-		    1000, 10 * 1000);
+		    0, ConfigurationManager.getInstance().getPollingIntervalMs());
 	}
     }
 
@@ -86,7 +90,7 @@ public class PollingService {
 		    task.cancel();
 		}
 	    }
-	    
+
 	    this.tasks.clear();
 	}
 
