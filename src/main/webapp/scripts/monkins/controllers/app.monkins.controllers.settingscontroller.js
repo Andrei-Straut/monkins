@@ -12,6 +12,8 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
         $scope.newJob = {};
 
         $scope.init = function () {
+            $("[data-toggle='tooltip']").tooltip();
+            
             var interval = window.setInterval(function () {
                 var settingsRequest = WebSocketFactory.getSettings();
                 settingsRequest.then(function (response) {
