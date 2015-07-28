@@ -12,10 +12,8 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
         var currentCallbackId = 0;
         // Create our websocket object with the address to the websocket
         var ws = new WebSocket(wsURL);
-
         var UPDATE_JOB_MESSAGE = 'UPDATEJOB';
         var UPDATE_SETTINGS_MESSAGE = 'UPDATESETTINGS';
-
         ws.onopen = function (event) {
             console.log("Socket opened!");
         };
@@ -81,7 +79,6 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                 cb: defer
             };
             request.callback_id = callbackId;
-
             if (ws.readyState == 0 || ws.readyState == 2 || ws.readyState == 3) {
                 var interval = window.setInterval(function () {
                     var response = {};
@@ -91,7 +88,6 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                     response.description = 'Connection was closed in the meantime '
                             + '( or hasn\'t been successfully opened), please try and refresh the page';
                     listener(response);
-
                     window.clearInterval(interval);
                 }, 1000);
             } else {
@@ -108,13 +104,11 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
         ;
         function listener(data) {
             var messageObj = data;
-
             //If we have an UPDATE or UPDATE_SETTINGS message, we don't care much about callback id
             if (messageObj.description
                     && (messageObj.description.toUpperCase() === UPDATE_JOB_MESSAGE
                             || messageObj.description.toUpperCase() === UPDATE_SETTINGS_MESSAGE)) {
                 console.log("Received update: ", messageObj);
-
                 switch (messageObj.description.toUpperCase()) {
                     case UPDATE_JOB_MESSAGE:
                     {
@@ -145,10 +139,11 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
                     console.log("Request with id " + messageObj.callback_id + " completed");
                     delete callbacks[messageObj.callbackID];
                 }
-                //If not, we have a standalone message, log it
-            } else {
-                console.log("Received message: ", messageObj);
+                return;
             }
+            
+            //If not, we have a standalone message, log it
+            console.log("Received message: ", messageObj);
         }
 
         // This creates a new callback ID for a request
