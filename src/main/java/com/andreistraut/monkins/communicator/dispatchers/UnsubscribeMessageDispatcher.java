@@ -47,14 +47,23 @@ public class UnsubscribeMessageDispatcher extends MessageDispatcher {
     @Override
     boolean process() throws Exception {
 	if (this.service.getSessions() != null && !this.service.getSessions().isEmpty()) {
-	    if (this.service.getSessions().contains(session) && session.isOpen()) {
-		session.close(new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE, "Close requested"));
+	    
+	    if(this.session.isOpen()) {
+		this.session.close(new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE, "Close requested"));
+
+		Logger.getLogger(WebSocketService.class
+			.getName()).log(
+				Level.INFO, "{0}: {1}",
+				new Object[]{session.getId(), "Session closed"});
+	    }
+	    
+	    if (this.service.getSessions().contains(session)) {
 		this.service.getSessions().remove(session);
 
 		Logger.getLogger(WebSocketService.class
 			.getName()).log(
 				Level.INFO, "{0}: {1}",
-				new Object[]{session.getId(), "Client unsubscribed"});
+				new Object[]{session.getId(), "Session unsubscribed"});
 
 	    } else {
 		Logger.getLogger(WebSocketService.class

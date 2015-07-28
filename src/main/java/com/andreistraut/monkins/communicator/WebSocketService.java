@@ -86,11 +86,6 @@ public class WebSocketService {
     @OnClose
     public void onClose(Session session) throws IOException {
 
-	Logger.getLogger(WebSocketService.class
-		.getName()).log(
-			Level.INFO, "{0}: {1}",
-			new Object[]{session.getId(), "Connection closed"});
-
 	MessageDispatcherFactory dispatcherFactory = new MessageDispatcherFactory(this, session, pollingService);
 	dispatcherFactory.setSessions(sessions);
 	UnsubscribeMessageDispatcher unsubscriber = new UnsubscribeMessageDispatcher(this, pollingService, session, MessageType.UNSUBSCRIBE);
@@ -98,6 +93,11 @@ public class WebSocketService {
 	    dispatcherFactory.process(unsubscriber);
 	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Session with id {0} unsubscribed. Open sessions left: {1}",
 		    new Object[]{session.getId(), sessions.size()});
+
+	    Logger.getLogger(WebSocketService.class
+		    .getName()).log(
+			    Level.INFO, "{0}: {1}",
+			    new Object[]{session.getId(), "Connection closed"});
 	} catch (Exception ex) {
 	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Error occurred unsubscribing client on close event", ex);
 	}
