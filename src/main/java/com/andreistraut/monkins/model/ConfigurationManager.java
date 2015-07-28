@@ -20,8 +20,7 @@ import java.util.logging.Logger;
 public class ConfigurationManager {
 
     private static ConfigurationManager _instance;
-    private final String MONKINS_FOLDER = System.getProperty("user.home") + System.getProperty("file.separator") + ".monkins";
-    private final String MONKINS_CONFIG_FILE = MONKINS_FOLDER + System.getProperty("file.separator") + "config.json";
+    private final String MONKINS_CONFIG_FILE = FileAccessHelper.getConfigFilePath();
 
     private String JSON_API_SUFFIX = "/api/json?depth=1";
     private String JSON_API_TEST_REPORT_SUFFIX = "/lastCompletedBuild/testReport/api/json"
@@ -167,6 +166,7 @@ public class ConfigurationManager {
 	configJson.addProperty("displayDetailsForSuccessfulJobs", this.displayDetailsForSuccessfulJobs);
 	configJson.addProperty("displayDetailsForUnstableJobs", this.displayDetailsForUnstableJobs);
 	configJson.addProperty("displayDetailsForFailedJobs", this.displayDetailsForFailedJobs);
+	configJson.addProperty("settingsPath", this.MONKINS_CONFIG_FILE);
 
 	JsonArray urls = new JsonArray();
 	for (PollingJob job : this.pollingJobs) {
@@ -273,10 +273,6 @@ public class ConfigurationManager {
 			new Object[]{configFilePath, e.getMessage()});
 	    }
 	}
-    }
-
-    public String getMONKINS_FOLDER() {
-	return MONKINS_FOLDER;
     }
 
     public String getMONKINS_CONFIG_FILE() {
