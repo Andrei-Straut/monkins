@@ -38,7 +38,7 @@ public class GetSettingsMessageDispatcher extends MessageDispatcher {
 
     @Override
     boolean process() throws Exception {
-	respond(session, new MessageResponse(request.getCallbackId(), true, ConfigurationManager.getInstance().toJson(true)));
+	respond(this.session, new MessageResponse(this.request.getCallbackId(), true, ConfigurationManager.getInstance().toJson(true)));
 	
 	return true;
     }

@@ -60,7 +60,7 @@ public class SubscribeMessageDispatcher extends MessageDispatcher {
 
 	this.pollingService.start();
 
-	respond(session, new MessageResponse(this.request.getCallbackId(), 200, false, "Subscribe", new JsonObject()));
+	respond(session, new MessageResponse(this.request.getCallbackId(), false, new JsonObject()));
 	
 	return true;
     }

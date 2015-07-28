@@ -55,7 +55,7 @@ public class GetJobListMessageDispatcher extends MessageDispatcher {
 	    JsonObject responseData = new JsonObject();
 	    responseData.add("jobs", jobsJson);
 
-	    response = new MessageResponse(request.getCallbackId(), 200, true, "JobList", responseData);
+	    response = new MessageResponse(request.getCallbackId(), true, responseData);
 	    respond(session, response);
 	    
 	    return true;
