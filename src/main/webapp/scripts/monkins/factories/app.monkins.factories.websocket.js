@@ -49,14 +49,6 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
             var promise = sendRequest(request);
             return promise;
         };
-        Service.unsubscribe = function () {
-            var request = {
-                type: "Unsubscribe",
-                data: {}
-            };
-            var promise = sendRequest(request);
-            return promise;
-        };
         Service.unSubscribeAll = function () {
             var request = {
                 type: "UnsubscribeAll",
@@ -116,13 +108,12 @@ monkins.factory('WebSocketFactory', ['$q', '$rootScope',
         ;
         function listener(data) {
             var messageObj = data;
-            // If an object exists with callback_id in our callbacks object, resolve it
-            console.log("Received: ", messageObj);
 
             //If we have an UPDATE or UPDATE_SETTINGS message, we don't care much about callback id
             if (messageObj.description
                     && (messageObj.description.toUpperCase() === UPDATE_JOB_MESSAGE
                             || messageObj.description.toUpperCase() === UPDATE_SETTINGS_MESSAGE)) {
+                console.log("Received update: ", messageObj);
 
                 switch (messageObj.description.toUpperCase()) {
                     case UPDATE_JOB_MESSAGE:

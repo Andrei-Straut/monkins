@@ -103,7 +103,7 @@ public class WebSocketService {
 	}
     }
 
-    public static void respond(Session session, MessageResponse response) {
+    public void respond(Session session, MessageResponse response) {
 	try {
 	    session.getBasicRemote().sendText(response.toJsonString());
 
