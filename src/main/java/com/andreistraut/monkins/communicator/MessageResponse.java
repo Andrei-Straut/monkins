@@ -19,6 +19,7 @@ public class MessageResponse {
     public MessageResponse(int callbackId, boolean isEnded, JsonElement data) {
 	this(callbackId);
 	this.data = data;
+	this.isEnded = isEnded;
     }
 
     public MessageResponse(int callbackId, int status, boolean isEnded, String description) {
