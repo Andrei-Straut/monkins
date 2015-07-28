@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Andrei-Straut/monkins.svg?branch=master)](https://travis-ci.org/Andrei-Straut/monkins)
+
 # Monkins (Multiple Jenkins Monitor)
 
 ### What is it?
