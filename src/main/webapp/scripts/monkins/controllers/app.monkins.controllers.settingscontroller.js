@@ -71,7 +71,7 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
                 $scope.notifyError("List of URLs cannot be empty", $('#modalError'));
             } else {
                 var interval = window.setInterval(function () {
-                    var updateSettingsRequest = WebSocketFactory.updateSettings(newSettings);
+                    var updateSettingsRequest = WebSocketFactory.updateSettings($scope.tempSettings);
                     updateSettingsRequest.then(function (response) {
                         if (response.status === 200) {
                             Notification.success({message: 'Settings Updated', delay: 2000});
