@@ -34,7 +34,9 @@ Just deploy Monkins on your server, than head up to
 ```java
     <deploy_url>/settings
 ```
-and put in the urls you want to monitor. Everything is pretty much explained there, and I did my best to make it easy.
+and put in the urls you want to monitor. Everything is pretty much explained there, and I did my best to make it easy. Settings page should be pretty self-explanatory:
+
+![Monkins Settings Page](https://github.com/Andrei-Straut/monkins/blob/meta/pictures/monkins_settings.PNG?raw=true "Monkins Settings Page")
 
 ### Do you take contributions / How can I contribute?
 Sure I do. Just head over to the issues page, pick one, clone the repository, fix the issue, and submit a pull request. I promise I'll review and integrate it fast
