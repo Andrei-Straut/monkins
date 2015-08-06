@@ -3,7 +3,9 @@
 # Monkins (Multiple Jenkins Monitor)
 
 ### What is it?
-Monkins is a web app that allows you to monitor the state of jobs aggregated from various separate [Jenkins](https://jenkins-ci.org/)  servers / instances. No need for installing plugins or any extra work on the Jenkins side, just plugin the urls of the jobs you want to track and Monkins does the rest
+Monkins is a web app that allows you to monitor the state of jobs aggregated from various separate [Jenkins](https://jenkins-ci.org/)  servers / instances. No need for installing plugins or any extra work on the Jenkins side, just plugin the urls of the jobs you want to track and Monkins does the rest. For instance:
+
+![Monkins Main Page](https://github.com/Andrei-Straut/monkins/blob/meta/pictures/monkins_main.PNG?raw=true "Monkins Main Page")
 
 ### Why does it exist?
 It exists because many team nowadays have dependencies on external modules / plugins, over which they have no control. If some of those dependencies are compiled or built in an accessible Jenkins, now you can monitor their state in order to get a view of their state, and subsequently, your project
