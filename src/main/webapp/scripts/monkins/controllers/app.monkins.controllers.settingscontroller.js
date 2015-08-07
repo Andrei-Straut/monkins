@@ -13,7 +13,7 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
 
         $scope.init = function () {
             $("[data-toggle='tooltip']").tooltip();
-            
+
             var interval = window.setInterval(function () {
                 var settingsRequest = WebSocketFactory.getSettings();
                 settingsRequest.then(function (response) {
@@ -63,10 +63,10 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
             }, 1000);
         };
 
-        $scope.saveSettings = function () {
+        $scope.saveSettings = function (returnToMainPage) {
             $scope.tempSettings.urls = [];
             angular.copy($scope.models.list, $scope.tempSettings.urls);
-            
+
             if (!$scope.tempSettings.urls || $scope.tempSettings.urls.length === 0) {
                 $scope.notifyError("List of URLs cannot be empty", $('#modalError'));
             } else {
@@ -75,6 +75,10 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
                     updateSettingsRequest.then(function (response) {
                         if (response.status === 200) {
                             Notification.success({message: 'Settings Updated', delay: 2000});
+
+                            if (returnToMainPage) {
+                                window.location = "./";
+                            }
                         } else {
                             $scope.notifyError(response.description, $('#modalError'));
                             console.log("Error: ", response);
@@ -87,6 +91,7 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
                     window.clearInterval(interval);
                 }, 1000);
             }
+
         };
 
         $scope.moveCallback = function (index) {
@@ -98,16 +103,16 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
         };
 
         $scope.addJob = function () {
-            if ($scope.newJob && $scope.newJob.name && $scope.newJob.url) {                
+            if ($scope.newJob && $scope.newJob.name && $scope.newJob.url) {
                 $scope.models.list.push({
                     "name": $scope.newJob.name,
                     "url": $scope.newJob.url,
                     "order": $scope.models.list.length + 1
                 });
-                
+
                 $scope.newJob = {};
             }
-            
+
             $('#addJobModal').modal('hide');
         };
 
@@ -130,7 +135,7 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
         };
 
         $scope.cancelAction = function () {
-            window.location = "/monkins";
+            window.location = "./";
         };
 
         $scope.reloadAction = function () {
@@ -138,13 +143,11 @@ monkins.controller('settingscontroller', ['$scope', 'WebSocketFactory', 'Notific
         };
 
         $scope.saveAndStayAction = function () {
-            $scope.saveSettings();
+            $scope.saveSettings(false);
         };
 
         $scope.saveAndReturnAction = function () {
-            $scope.saveSettings();
-
-            window.location = "/monkins";
+            $scope.saveSettings(true);
         };
 
         $scope.notifyError = function (notification, $modalElement) {
