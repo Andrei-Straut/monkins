@@ -152,7 +152,7 @@
                                                    class="form-control"
                                                    data-toggle="tooltip" 
                                                    data-placement="bottom" 
-                                                   data-original-title="Number of columns to present in the job view"
+                                                   data-original-title="Number of columns to present in the job view. Should be a number dividable by 12. If not, it will be rounded"
                                                    type="number"
                                                    min="1"
                                                    max="6"

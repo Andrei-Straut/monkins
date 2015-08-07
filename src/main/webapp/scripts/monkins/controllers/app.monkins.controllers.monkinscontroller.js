@@ -5,6 +5,7 @@ monkins.controller('monkinscontroller', ['$rootScope', '$scope', 'WebSocketFacto
         $scope.jobs = [];
         $scope.settings = {};
         $scope.errorText = '';
+        $scope.bootstrapCols = 12;
 
         $scope.init = function () {
             var interval = window.setInterval(function () {
@@ -41,6 +42,24 @@ monkins.controller('monkinscontroller', ['$rootScope', '$scope', 'WebSocketFacto
 
                 window.clearInterval(interval);
             }, 1000);
+        };
+        
+        $scope.getBootstrapColumns = function(numberOfColumns) {
+            /*
+             * bootstrap has columns defined as some sort percentages, where 12 cols
+             * is the maximum. Each column has a number which defines how many units
+             * occupies of that maximum. For instance, if we want to have 3 equal-width
+             * column, we need to specify the classes as col-md-4 col-sm-4 col-xs-4,
+             * where the 4 is the number of occupied columns. Thus, 12 / 3equal-width-cols = 4.
+             * 
+             * Use this calculation here
+             */
+            var bootstrapSuffix = Math.floor($scope.bootstrapCols / numberOfColumns);
+            var bootstrapClass = 'col-md-' + bootstrapSuffix 
+                    + ' col-sm-' + bootstrapSuffix 
+                    + ' col-xs-' + bootstrapSuffix;
+            
+            return bootstrapClass;            
         };
 
         $scope.subscribe = function () {

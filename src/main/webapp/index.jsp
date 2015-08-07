@@ -39,14 +39,14 @@
         <div id="jobContainer" class="jobContainer container-fluid">
             <div ng-repeat="jobValue in jobs">
                 <div display-job
-                     class="jobDisplay col-md-4 col-sm-4 col-xs-4" 
+                     class="jobDisplay {{getBootstrapColumns(settings.numberOfColumns)}}" 
                      ng-class="jobValue.associatedJob.lastBuildResult"
                      job="jobValue"
                      display-for-successful="settings.displayDetailsForSuccessfulJobs"
                      display-for-unstable="settings.displayDetailsForUnstableJobs"
                      display-for-failed="settings.displayDetailsForFailedJobs"
                      number-of-jobs="{{jobs.length}}"
-                     number-of-columns="3">
+                     number-of-columns="4">
                 </div>
             </div>
         </div>
