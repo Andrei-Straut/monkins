@@ -100,10 +100,6 @@ public class PollingJob {
 	JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 	JsonObject info = root.getAsJsonObject();
 
-	Logger.getLogger(ConfigurationManager.class.getName()).log(Level.FINER,
-		"Info parsed: {0}",
-		info.toString());
-
 	return info;
     }
 
