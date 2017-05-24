@@ -125,7 +125,7 @@ public class DisplayJob {
 		this.hasChanged = true;
 
 		Logger.getLogger(DisplayJob.class
-			.getName()).log(
+			.getName()).log( 
 				Level.INFO, "Info changed for job: {0}, {1}: {2}",
 				new Object[]{this.monitorDisplayName, "lastStableBuildTimeStamp", this.lastStableBuildTimeStamp});
 	    }

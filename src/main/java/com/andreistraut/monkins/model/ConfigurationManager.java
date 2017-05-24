@@ -120,9 +120,11 @@ public class ConfigurationManager {
 		PollingJob pollingJob = new PollingJob(
 			jobJson.get("name").getAsString(),
 			jobJson.get("url").getAsString(),
-			jobJson.get("order").getAsInt());
+			jobJson.get("order").getAsInt(),
+			jobJson.get("lastStatus").getAsString());
 
 		DisplayJob job = new DisplayJob(pollingJob.getName(), pollingJob.getUrl(), pollingJob.getOrder());
+		job.setLastBuildResult(jobJson.get("lastStatus").getAsString());
 		pollingJob.setAssociatedJob(job);
 
 		this.pollingJobs.add(pollingJob);
@@ -248,6 +250,11 @@ public class ConfigurationManager {
 
 	return null;
     }
+    
+    public synchronized boolean save() throws IOException {
+	this.saveSettingsFile(MONKINS_CONFIG_FILE);
+	return true;
+    }
 
     private void saveSettingsFile(String configFilePath) throws IOException {
 	File configFile = new File(configFilePath);
@@ -263,7 +270,12 @@ public class ConfigurationManager {
 
 		Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile), "utf-8"));
 		writer.write(contents);
+		writer.flush();
 		writer.close();
+		
+		configFile.setReadable(true, false);
+		configFile.setWritable(true, false);
+		configFile.setExecutable(true, false);
 
 		java.util.logging.Logger.getLogger(ConfigurationManager.class.getName()).log(Level.WARNING,
 			"Settings saved at path {0}", configFilePath);

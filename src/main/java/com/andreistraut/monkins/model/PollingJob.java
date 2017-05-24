@@ -39,7 +39,7 @@ public class PollingJob {
     public PollingJob() {
     }
 
-    public PollingJob(String name, String url, int order) {
+    public PollingJob(String name, String url, int order, String lastStatus) {
 	this.name = name;
 	this.url = url;
 	this.order = order;
@@ -61,6 +61,11 @@ public class PollingJob {
 	object.addProperty("name", this.name);
 	object.addProperty("url", this.url);
 	object.addProperty("order", this.order);
+	if(this.associatedJob != null) {
+	    object.addProperty("lastStatus", this.associatedJob.getLastBuildResult());
+	} else {
+	    object.addProperty("lastStatus", "null");
+	}
 
 	if (includeChildrenAndInfo) {
 	    object.addProperty("isCancelled", this.isCancelled);
@@ -127,7 +132,8 @@ public class PollingJob {
 		    if (getDetailsFailCount() < ConfigurationManager.getInstance().getFailCountBeforeCancel()
 			    && ConfigurationManager.getInstance().getFailCountBeforeCancel() > 0) {
 			try {
-			    JsonObject jobCompletedBuildTestReportJson = this.retrieve(this.url + ConfigurationManager.getInstance().getJSON_API_TEST_REPORT_SUFFIX());
+			    JsonObject jobCompletedBuildTestReportJson = this.retrieve(this.url + 
+				    ConfigurationManager.getInstance().getJSON_API_TEST_REPORT_SUFFIX());
 			    this.associatedJob.updateInfo(jobCompletedBuildTestReportJson);
 			} catch (Exception e) {
 			    Logger.getLogger(ConfigurationManager.class.getName()).log(Level.WARNING,
@@ -142,15 +148,13 @@ public class PollingJob {
 			this.increaseDetailsFailCount();
 		    }
 
-		    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		    String contents = gson.toJson(this.associatedJob.toJson());
-
 		    if (this.associatedJob.hasChanged()) {
 			Logger.getLogger(PollingJob.class.getName()).log(Level.INFO, "Info for job {0} updated", this.name);
 
 			MessageResponse response = new MessageResponse(0, 200, false, "UPDATEJOB", this.toJson());
 			WebSocketService.respondAll(response);
 			this.associatedJob.setHasChanged(false);
+			ConfigurationManager.getInstance().save();
 		    }
 		} catch (FileNotFoundException ex) {
 		    Logger.getLogger(PollingJob.class.getName()).log(Level.SEVERE, "Error retrieving info for polling job", ex);
@@ -185,6 +189,7 @@ public class PollingJob {
 		MessageResponse response = new MessageResponse(0, 500, false, "JOB_CANCELED", this.toJson());
 		WebSocketService.respondAll(response);
 
+		this.associatedJob = null;
 		ConfigurationManager.getInstance().getPollingJobs().remove(this);
 	    }
 

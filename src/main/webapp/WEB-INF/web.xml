@@ -9,6 +9,14 @@
         <url-pattern>/faq</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>Timer</servlet-name>
+        <servlet-class>com.andreistraut.monkins.controller.Timer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Timer</servlet-name>
+        <url-pattern>/timer</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>Settings</servlet-name>
         <servlet-class>com.andreistraut.monkins.controller.Settings</servlet-class>
     </servlet>
