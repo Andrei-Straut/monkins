@@ -12,26 +12,32 @@
     "urls": [{
         "name": "Jenkins Core Trunk",
         "url": "https://ci.jenkins-ci.org/view/Jenkins%20core/job/jenkins_main_trunk/",
-        "order": 1
+        "order": 1,
+		"lastStatus": "SUCCESS"
     }, {
         "name": "OpenSUSE Unit Tests",
         "url": "https://ci.opensuse.org/view/kiwi/job/kiwi-unittest/",
-        "order": 2
+        "order": 2,
+		"lastStatus": "SUCCESS"
     }, {
         "name": "OpenStack Dev Stack",
         "url": "https://ci.opensuse.org/view/OpenStack/job/openstack-devstack/",
-        "order": 3
+        "order": 3,
+		"lastStatus": "SUCCESS"
     }, {
         "name": "Apache Hadoop (Trunk Java 8)",
         "url": "https://builds.apache.org/job/Hadoop-common-trunk-Java8/",
-        "order": 4
+        "order": 4,
+		"lastStatus": "SUCCESS"
     }, {
         "name": "Apache CXF 3",
         "url": "https://builds.apache.org/view/All/job/CXF-3.0.x/",
-        "order": 5
+        "order": 5,
+		"lastStatus": "SUCCESS"
     }, {
         "name": "CyanogenMod Android",
         "url": "http://jenkins.cyanogenmod.com/job/android/",
-        "order": 6
+        "order": 6,
+		"lastStatus": "SUCCESS"
     }]
 }
