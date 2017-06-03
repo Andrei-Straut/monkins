@@ -6,6 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Monkins</title>        
+        <link rel="icon" type="image/png" href="img/monkins.png">
 
         <!-- BOOTSTRAP STYLES-->
         <link rel="stylesheet" href="css/lib/bootstrap/bootstrap.min.css">
