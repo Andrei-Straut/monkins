@@ -34,6 +34,8 @@
         <script src="scripts/monkins/factories/app.monkins.factories.websocket.js"></script>
         <script src="scripts/monkins/directives/app.monkins.directives.job.js"></script>
         <script src="scripts/monkins/controllers/app.monkins.controllers.monkinscontroller.js"></script>
+        
+        <script src="scripts/monkins/analytics.js"></script>
     </head>
 
     <body ng-controller="monkinscontroller" ng-init="init();">
