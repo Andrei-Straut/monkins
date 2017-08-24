@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Andrei-Straut/monkins.svg?branch=master)](https://travis-ci.org/Andrei-Straut/monkins)
+[![Build Status](https://img.shields.io/jenkins/s/https/www.andreistraut.info/jenkins/job/Monkins-master.svg)](https://www.andreistraut.info/jenkins/view/Monkins/job/Monkins-master/) [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 # Monkins (Multiple Jenkins Monitor)
 
