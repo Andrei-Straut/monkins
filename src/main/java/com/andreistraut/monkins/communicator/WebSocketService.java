@@ -92,12 +92,12 @@ public class WebSocketService {
 	try {
 	    dispatcherFactory.process(unsubscriber);
 	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Session with id {0} unsubscribed. Open sessions left: {1}",
-		    new Object[]{session.getId(), sessions.size()});
+		    new Object[]{session != null ? session.getId() : "<No Session ID available>", sessions.size()});
 
 	    Logger.getLogger(WebSocketService.class
 		    .getName()).log(
 			    Level.INFO, "{0}: {1}",
-			    new Object[]{session.getId(), "Connection closed"});
+			    new Object[]{session != null ? session.getId() : "<No Session ID available>", "Connection closed"});
 	} catch (Exception ex) {
 	    Logger.getLogger(WebSocketService.class.getName()).log(Level.SEVERE, "Error occurred unsubscribing client on close event", ex);
 	}

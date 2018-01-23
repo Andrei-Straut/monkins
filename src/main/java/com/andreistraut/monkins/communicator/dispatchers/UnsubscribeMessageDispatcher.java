@@ -48,7 +48,7 @@ public class UnsubscribeMessageDispatcher extends MessageDispatcher {
     boolean process() throws Exception {
 	if (this.service.getSessions() != null && !this.service.getSessions().isEmpty()) {
 	    
-	    if(this.session.isOpen()) {
+	    if(this.session != null && this.session.isOpen()) {
 		this.session.close(new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE, "Close requested"));
 
 		Logger.getLogger(WebSocketService.class
