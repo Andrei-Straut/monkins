@@ -34,8 +34,18 @@
         <script src="scripts/monkins/factories/app.monkins.factories.websocket.js"></script>
         <script src="scripts/monkins/directives/app.monkins.directives.job.js"></script>
         <script src="scripts/monkins/controllers/app.monkins.controllers.monkinscontroller.js"></script>
-        
-        <script src="scripts/monkins/analytics.js"></script>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100610555-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'UA-100610555-1');
+            gtag('send', 'Monkins');
+        </script>
     </head>
 
     <body ng-controller="monkinscontroller" ng-init="init();">
