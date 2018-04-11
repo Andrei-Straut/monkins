@@ -4,6 +4,13 @@
 <!DOCTYPE html>
 <html ng-app="monkins">
     <head>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-N46JBZF');</script>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Monkins</title>        
         <link rel="icon" type="image/png" href="img/monkins.png">
@@ -49,6 +56,11 @@
     </head>
 
     <body ng-controller="monkinscontroller" ng-init="init();">
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N46JBZF"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        
         <div id="jobContainer" class="jobContainer container-fluid">
             <div ng-repeat="jobValue in jobs">
                 <div display-job
